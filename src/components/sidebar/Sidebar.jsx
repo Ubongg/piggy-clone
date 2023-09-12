@@ -16,6 +16,7 @@ import MenuIcon from "@mui/icons-material/Menu";
 import SavingsIcon from "@mui/icons-material/Savings";
 import PersonIcon from "@mui/icons-material/Person";
 import PowerSettingsNewIcon from "@mui/icons-material/PowerSettingsNew";
+import Link from "next/link";
 
 const drawerWidth = 240;
 
@@ -118,29 +119,40 @@ export default function Sidebar() {
                   px: 2.5,
                 }}
               >
-                <ListItemIcon
-                  sx={{
-                    minWidth: 0,
-                    mr: open ? 3 : "auto",
-                    justifyContent: "center",
-                    color: "white",
-                  }}
+                <Link
+                  href={
+                    text === "Home"
+                      ? "/"
+                      : text === "Savings"
+                      ? "/savings"
+                      : "/account"
+                  }
+                  style={{ display: "flex", alignItems: "center" }}
                 >
-                  {text === "Home" ? (
-                    <HomeIcon />
-                  ) : text === "Savings" ? (
-                    <SavingsIcon />
-                  ) : (
-                    <PersonIcon />
-                  )}
-                </ListItemIcon>
-                <ListItemText
-                  primary={text}
-                  sx={{ opacity: open ? 1 : 0, color: "white" }}
-                  primaryTypographyProps={{
-                    fontWeight: 500,
-                  }}
-                />
+                  <ListItemIcon
+                    sx={{
+                      minWidth: 0,
+                      mr: open ? 3 : "auto",
+                      justifyContent: "center",
+                      color: "white",
+                    }}
+                  >
+                    {text === "Home" ? (
+                      <HomeIcon />
+                    ) : text === "Savings" ? (
+                      <SavingsIcon />
+                    ) : (
+                      <PersonIcon />
+                    )}
+                  </ListItemIcon>
+                  <ListItemText
+                    primary={text}
+                    sx={{ opacity: open ? 1 : 0, color: "white" }}
+                    primaryTypographyProps={{
+                      fontWeight: 500,
+                    }}
+                  />
+                </Link>
               </ListItemButton>
             </ListItem>
           ))}
