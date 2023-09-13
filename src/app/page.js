@@ -1,12 +1,13 @@
 "use client";
 
 import * as React from "react";
-import { Box, Card, Drawer, Typography } from "@mui/material";
+import { Box, Button, Card, Drawer, Typography } from "@mui/material";
 import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 import ShieldOutlinedIcon from "@mui/icons-material/ShieldOutlined";
 import AccountBalanceOutlinedIcon from "@mui/icons-material/AccountBalanceOutlined";
 import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 import ThumbUpAltOutlinedIcon from "@mui/icons-material/ThumbUpAltOutlined";
+import ReceiptIcon from "@mui/icons-material/Receipt";
 import Link from "next/link";
 import Activities from "@/components/activities/Activities";
 import { useTheme } from "@mui/material/styles";
@@ -63,7 +64,8 @@ const Home = () => {
       <Box
         sx={{
           overflowX: "auto",
-          my: "50px",
+          mt: "40px",
+          mb: "50px",
           display: "flex",
           gap: "1.5rem",
         }}
@@ -169,13 +171,15 @@ const Home = () => {
                 },
               }}
             >
-              <ThumbUpAltOutlinedIcon style={{ color: "#0066b2" }} />
+              <ThumbUpAltOutlinedIcon
+                style={{ color: "#0066b2", fontSize: "1.7rem" }}
+              />
               <Box>
                 <Typography
                   variant="h6"
                   fontWeight={600}
                   fontSize="0.8rem"
-                  mb={-1}
+                  mb={-0.7}
                   color="#0066b2"
                 >
                   See your recent activities
@@ -195,39 +199,101 @@ const Home = () => {
           </React.Fragment>
         ))}
       </div>
-      <Box
-        sx={{
-          cursor: "pointer",
-          display: "flex",
-          alignItems: "center",
-          border: "1px solid #7CB9E8",
-          gap: "0.5rem",
-          borderBottomRightRadius: "0.5rem",
-          borderTopLeftRadius: "0.5rem",
-          borderTopRightRadius: "0.5rem",
-          p: "15px",
-          width: "60%",
-          [theme.breakpoints.down("md")]: {
-            width: "100%",
-          },
-        }}
-      >
-        <ThumbUpAltOutlinedIcon style={{ color: "#7CB9E8" }} />
-        <Box>
-          <Typography
-            variant="h6"
-            fontWeight={600}
-            fontSize="0.8rem"
-            mb={-1}
-            color="#7CB9E8"
-          >
-            Create a safelock
-          </Typography>
-          <Typography variant="p" fontSize="0.7rem">
-            Avoid spending temptations. Tap to create a Safelock
-          </Typography>
+      <Link href="/safelock">
+        <Box
+          sx={{
+            cursor: "pointer",
+            display: "flex",
+            alignItems: "center",
+            border: "1px solid #7CB9E8",
+            gap: "0.5rem",
+            borderBottomRightRadius: "0.5rem",
+            borderTopLeftRadius: "0.5rem",
+            borderTopRightRadius: "0.5rem",
+            p: "15px",
+            width: "60%",
+            [theme.breakpoints.down("md")]: {
+              width: "100%",
+            },
+          }}
+        >
+          <ThumbUpAltOutlinedIcon
+            style={{ color: "#7CB9E8", fontSize: "1.7rem" }}
+          />
+          <Box>
+            <Typography
+              variant="h6"
+              fontWeight={600}
+              fontSize="0.8rem"
+              mb={-0.7}
+              color="#7CB9E8"
+            >
+              Create a safelock
+            </Typography>
+            <Typography variant="p" fontSize="0.7rem" color="black">
+              Avoid spending temptations. Tap to create a Safelock
+            </Typography>
+          </Box>
         </Box>
-      </Box>
+      </Link>
+      <div style={{ margin: "40px 0" }}>
+        <Typography variant="h6" fontSize="0.7rem" mb={1}>
+          RECENT ACTIVITIES
+        </Typography>
+        <Box
+          sx={{
+            display: "flex",
+            alignItems: "center",
+            border: "1px solid rgb(224, 222, 222)",
+            gap: "0.5rem",
+            borderBottomRightRadius: "0.5rem",
+            borderTopLeftRadius: "0.5rem",
+            borderTopRightRadius: "0.5rem",
+            p: "15px",
+            width: "60%",
+            [theme.breakpoints.down("md")]: {
+              width: "100%",
+            },
+          }}
+        >
+          <ReceiptIcon style={{ color: "#213555", fontSize: "2rem" }} />
+          <Box>
+            <Typography
+              variant="h6"
+              fontSize="0.7rem"
+              mb={-0.7}
+              color="#213555"
+            >
+              Just registered
+            </Typography>
+            <Typography variant="p" fontSize="0.7rem" color="#213555">
+              3 yrs ago
+            </Typography>
+          </Box>
+        </Box>
+        {["right"].map((anchor) => (
+          <React.Fragment key={anchor}>
+            <Button
+              sx={{
+                fontSize: "0.9rem",
+                color: "#0066b2",
+                mt: "10px",
+                pl: 0,
+              }}
+              onClick={toggleDrawer(anchor, true)}
+            >
+              view more activities
+            </Button>
+            <Drawer
+              anchor={anchor}
+              open={state[anchor]}
+              onClose={toggleDrawer(anchor, false)}
+            >
+              {list(anchor)}
+            </Drawer>
+          </React.Fragment>
+        ))}
+      </div>
     </Box>
   );
 };
