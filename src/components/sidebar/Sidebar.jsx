@@ -6,7 +6,6 @@ import Box from "@mui/material/Box";
 import MuiDrawer from "@mui/material/Drawer";
 import List from "@mui/material/List";
 import CssBaseline from "@mui/material/CssBaseline";
-import Typography from "@mui/material/Typography";
 import ListItem from "@mui/material/ListItem";
 import ListItemButton from "@mui/material/ListItemButton";
 import ListItemIcon from "@mui/material/ListItemIcon";
@@ -27,7 +26,7 @@ const openedMixin = (theme) => ({
     duration: theme.transitions.duration.enteringScreen,
   }),
   overflowX: "hidden",
-  background: "#011F5B",
+  background: "#213555",
 });
 
 const closedMixin = (theme) => ({
@@ -40,7 +39,7 @@ const closedMixin = (theme) => ({
   [theme.breakpoints.up("sm")]: {
     width: `calc(${theme.spacing(8)} + 1px)`,
   },
-  background: "#002D62",
+  background: "#27374D",
 });
 
 const Drawer = styled(MuiDrawer, {
@@ -49,6 +48,7 @@ const Drawer = styled(MuiDrawer, {
   width: drawerWidth,
   flexShrink: 0,
   whiteSpace: "nowrap",
+  boxSizing: "border-box",
 
   ...(open && {
     ...openedMixin(theme),
@@ -65,7 +65,13 @@ export default function Sidebar() {
   const [open, setOpen] = React.useState(false);
 
   return (
-    <Box sx={{ display: "flex" }}>
+    <Box
+      sx={{
+        [theme.breakpoints.down("md")]: {
+          display: "none",
+        },
+      }}
+    >
       <CssBaseline />
       <Drawer variant="permanent" open={open}>
         <List sx={{ margin: "20px 0" }}>
@@ -94,7 +100,6 @@ export default function Sidebar() {
                   sx={{
                     opacity: open ? 1 : 0,
                     color: "white",
-                    fontWeight: 700,
                   }}
                   primaryTypographyProps={{
                     fontSize: "1.3rem",
@@ -115,7 +120,7 @@ export default function Sidebar() {
               <ListItemButton
                 sx={{
                   minHeight: 48,
-                  justifyContent: open ? "initial" : "center",
+                  justifyContent: "initial",
                   px: 2.5,
                 }}
               >

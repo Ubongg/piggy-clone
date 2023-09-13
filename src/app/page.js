@@ -1,33 +1,38 @@
-"use client";
+import { Box, Card, Container, Stack, Typography } from "@mui/material";
+import AccountCircleIcon from "@mui/icons-material/AccountCircle";
+import ShieldOutlinedIcon from "@mui/icons-material/ShieldOutlined";
+import Link from "next/link";
 
-import * as React from "react";
-import Box from "@mui/material/Box";
-import Tab from "@mui/material/Tab";
-import TabContext from "@mui/lab/TabContext";
-import TabList from "@mui/lab/TabList";
-import TabPanel from "@mui/lab/TabPanel";
-
-export default function LabTabs() {
-  const [value, setValue] = React.useState("1");
-
-  const handleChange = (event, newValue) => {
-    setValue(newValue);
-  };
-
+const Home = () => {
   return (
-    <Box sx={{ width: "100%", typography: "body1" }}>
-      <TabContext value={value}>
-        <Box sx={{ borderBottom: 1, borderColor: "divider" }}>
-          <TabList onChange={handleChange} aria-label="lab API tabs example">
-            <Tab label="Item One" value="1" />
-            <Tab label="Item Two" value="2" />
-            <Tab label="Item Three" value="3" />
-          </TabList>
+    <Box
+      sx={{
+        display: "flex",
+        width: "100%",
+        background: "red",
+        m: "38px 30px",
+      }}
+    >
+      <Box
+        sx={{
+          display: "flex",
+          justifyContent: "space-between",
+          width: "100%",
+        }}
+      >
+        <Box>
+          <Typography variant="h5" fontWeight={600} fontSize="1.8rem">
+            Ubong,
+          </Typography>
+          <Typography variant="p">Save some money today!</Typography>
         </Box>
-        <TabPanel value="1">Item One</TabPanel>
-        <TabPanel value="2">Item Two</TabPanel>
-        <TabPanel value="3">Item Three</TabPanel>
-      </TabContext>
+        <Link href="/account">
+          <AccountCircleIcon
+            style={{ fontSize: "2.3rem", cursor: "pointer" }}
+          />
+        </Link>
+      </Box>
     </Box>
   );
-}
+};
+export default Home;

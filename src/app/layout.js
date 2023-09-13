@@ -1,6 +1,6 @@
 import "./globals.css";
 import { Inter } from "next/font/google";
-import { ThemeProvider } from "@mui/material";
+import { Box, ThemeProvider } from "@mui/material";
 import { theme } from "@/components/theme/theme";
 import Sidebar from "@/components/sidebar/Sidebar";
 
@@ -16,10 +16,10 @@ export default function RootLayout({ children }) {
     <html lang="en">
       <body className={inter.className}>
         <ThemeProvider theme={theme}>
-          <div className="container">
+          <Box sx={{ display: "flex" }}>
             <Sidebar />
             {children}
-          </div>
+          </Box>
         </ThemeProvider>
       </body>
     </html>
