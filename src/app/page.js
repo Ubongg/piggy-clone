@@ -40,6 +40,9 @@ const Home = () => {
         width: "100%",
         m: "38px 45px",
         overflowX: "auto",
+        [theme.breakpoints.down("sm")]: {
+          m: "38px 15px",
+        },
       }}
     >
       <Box
@@ -85,6 +88,10 @@ const Home = () => {
               background: "#0066b2",
               color: "white",
               cursor: "pointer",
+              borderBottomRightRadius: "0.5rem",
+              borderTopLeftRadius: "0.5rem",
+              borderTopRightRadius: "0.5rem",
+              borderBottomLeftRadius: 0,
             }}
           >
             <ShieldOutlinedIcon style={{ fontSize: "2rem" }} />
@@ -108,9 +115,13 @@ const Home = () => {
               pl: "20px",
               alignItems: "center",
               gap: "0.7rem",
-              background: "#FF69B4",
+              background: "#e0218a",
               color: "white",
               cursor: "pointer",
+              borderBottomRightRadius: "0.5rem",
+              borderTopLeftRadius: "0.5rem",
+              borderTopRightRadius: "0.5rem",
+              borderBottomLeftRadius: 0,
             }}
           >
             <AccountBalanceOutlinedIcon style={{ fontSize: "2rem" }} />
@@ -137,6 +148,10 @@ const Home = () => {
               background: "#7CB9E8",
               color: "white",
               cursor: "pointer",
+              borderBottomRightRadius: "0.5rem",
+              borderTopLeftRadius: "0.5rem",
+              borderTopRightRadius: "0.5rem",
+              borderBottomLeftRadius: 0,
             }}
           >
             <LockOutlinedIcon style={{ fontSize: "2rem" }} />
