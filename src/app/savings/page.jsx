@@ -6,6 +6,7 @@ import AccountBalanceOutlinedIcon from "@mui/icons-material/AccountBalanceOutlin
 import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 import Link from "next/link";
 import { useTheme } from "@mui/material/styles";
+import ProfileButton from "@/components/profileButton/ProfileButton";
 
 const Savings = () => {
   const theme = useTheme();
@@ -33,11 +34,7 @@ const Savings = () => {
           </Typography>
           <Typography variant="p">Let's see how well you're doing.</Typography>
         </Box>
-        <Link href="/account" style={{ color: "#213555" }}>
-          <AccountCircleIcon
-            style={{ fontSize: "2.5rem", cursor: "pointer" }}
-          />
-        </Link>
+        <ProfileButton />
       </Box>
       <Box
         sx={{

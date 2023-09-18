@@ -11,6 +11,7 @@ import ReceiptIcon from "@mui/icons-material/Receipt";
 import Link from "next/link";
 import Activities from "@/components/activities/Activities";
 import { useTheme } from "@mui/material/styles";
+import ProfileButton from "@/components/profileButton/ProfileButton";
 
 const Home = () => {
   const theme = useTheme();
@@ -58,11 +59,7 @@ const Home = () => {
           </Typography>
           <Typography variant="p">Save some money today!</Typography>
         </Box>
-        <Link href="/account" style={{ color: "#213555" }}>
-          <AccountCircleIcon
-            style={{ fontSize: "2.5rem", cursor: "pointer" }}
-          />
-        </Link>
+        <ProfileButton />
       </Box>
       <Box
         sx={{
