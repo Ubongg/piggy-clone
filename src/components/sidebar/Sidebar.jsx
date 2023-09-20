@@ -111,7 +111,7 @@ export default function Sidebar() {
           ))}
         </List>
         <List>
-          {["Home", "Savings", "Account"].map((text, index) => (
+          {["Home", "Savings"].map((text, index) => (
             <ListItem
               key={text}
               disablePadding
@@ -125,13 +125,7 @@ export default function Sidebar() {
                 }}
               >
                 <Link
-                  href={
-                    text === "Home"
-                      ? "/"
-                      : text === "Savings"
-                      ? "/savings"
-                      : "/account"
-                  }
+                  href={text === "Home" ? "/" : "/savings"}
                   style={{ display: "flex", alignItems: "center" }}
                 >
                   <ListItemIcon
@@ -142,13 +136,7 @@ export default function Sidebar() {
                       color: "white",
                     }}
                   >
-                    {text === "Home" ? (
-                      <HomeIcon />
-                    ) : text === "Savings" ? (
-                      <SavingsIcon />
-                    ) : (
-                      <PersonIcon />
-                    )}
+                    {text === "Home" ? <HomeIcon /> : <SavingsIcon />}
                   </ListItemIcon>
                   <ListItemText
                     primary={text}

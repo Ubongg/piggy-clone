@@ -151,7 +151,7 @@ const Savings = () => {
               p: "30px 20px",
               flexDirection: "column",
               gap: "0.9rem",
-              background: "#E0FFFF",
+              background: "#9fd7fe",
               cursor: "pointer",
               boxShadow: "none",
               borderBottomRightRadius: "1rem",
@@ -163,11 +163,11 @@ const Savings = () => {
               },
             }}
           >
-            <LockOutlinedIcon style={{ fontSize: "2rem", color: "#7CB9E8" }} />
+            <LockOutlinedIcon style={{ fontSize: "2rem", color: "#0066b2" }} />
             <Typography
               variant="h5"
               sx={{
-                color: "#7CB9E8",
+                color: "#0066b2",
                 fontWeight: 600,
                 fontSize: "1.2rem",
                 [theme.breakpoints.down("sm")]: {
@@ -194,7 +194,7 @@ const Savings = () => {
               variant="p"
               sx={{
                 fontWeight: 600,
-                color: "#7CB9E8",
+                color: "#0066b2",
                 fontSize: "1.1rem",
                 [theme.breakpoints.down("sm")]: {
                   fontSize: "0.9rem",
