@@ -44,7 +44,7 @@ const Savings = () => {
           borderTopRightRadius: "0.5rem",
           p: "15px 15px 20px",
           my: "40px",
-          width: "60%",
+          width: "65%",
           [theme.breakpoints.down("md")]: {
             width: "100%",
           },

@@ -177,7 +177,7 @@ const Home = () => {
                 borderTopRightRadius: "0.5rem",
                 p: "15px",
                 mb: "25px",
-                width: "60%",
+                width: "65%",
                 [theme.breakpoints.down("md")]: {
                   width: "100%",
                 },
@@ -223,7 +223,7 @@ const Home = () => {
             borderTopLeftRadius: "0.5rem",
             borderTopRightRadius: "0.5rem",
             p: "15px",
-            width: "60%",
+            width: "65%",
             [theme.breakpoints.down("md")]: {
               width: "100%",
             },
@@ -262,7 +262,7 @@ const Home = () => {
             borderTopLeftRadius: "0.5rem",
             borderTopRightRadius: "0.5rem",
             p: "15px",
-            width: "60%",
+            width: "65%",
             [theme.breakpoints.down("md")]: {
               width: "100%",
             },

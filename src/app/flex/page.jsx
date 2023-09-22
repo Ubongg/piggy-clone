@@ -1,8 +1,6 @@
 "use client";
 
 import { Box, Tab, Button, Card, Drawer, Typography } from "@mui/material";
-import AccountBalanceOutlinedIcon from "@mui/icons-material/AccountBalanceOutlined";
-import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 import Link from "next/link";
 import { useTheme } from "@mui/material/styles";
 import ProfileButton from "@/components/profileButton/ProfileButton";
