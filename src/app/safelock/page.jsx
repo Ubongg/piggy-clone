@@ -8,17 +8,19 @@ import { TabPanel, TabList, TabContext } from "@mui/lab";
 import React, { useState } from "react";
 import CreateSafelock from "@/components/createSafelock/createSafelock";
 import AboutSafelock from "@/components/aboutSafelock/AboutSafelock";
+import { useGlobalContext } from "@/components/context/context";
 
 const Safelock = () => {
   const theme = useTheme();
+  const {
+    createSafelock,
+    aboutSafelock,
+    toggleAboutSafelockDrawer,
+    toggleCreateSafelockDrawer,
+  } = useGlobalContext();
+
   const [ongoing, setOngoing] = useState(true);
   const [value, setValue] = useState("1");
-  const [state, setState] = React.useState({
-    right: false,
-  });
-  const [state2, setState2] = React.useState({
-    right: false,
-  });
 
   const safeColor = "#0066b2";
 
@@ -26,34 +28,18 @@ const Safelock = () => {
     setValue(newValue);
   };
 
-  const toggleDrawer = (anchor, open) => (event) => {
-    if (
-      event.type === "keydown" &&
-      (event.key === "Tab" || event.key === "Shift")
-    ) {
-      return;
-    }
-
-    setState({ ...state, [anchor]: open });
-  };
-
-  const toggleDrawer2 = (anchor, open) => (event) => {
-    if (
-      event.type === "keydown" &&
-      (event.key === "Tab" || event.key === "Shift")
-    ) {
-      return;
-    }
-
-    setState2({ ...state2, [anchor]: open });
-  };
-
-  const list = (anchor) => (
-    <CreateSafelock toggleDrawer={toggleDrawer} anchor={anchor} />
+  const createSafelockList = (anchor) => (
+    <CreateSafelock
+      toggleCreateSafelockDrawer={toggleCreateSafelockDrawer}
+      anchor={anchor}
+    />
   );
 
-  const list2 = (anchor) => (
-    <AboutSafelock toggleDrawer2={toggleDrawer2} anchor={anchor} />
+  const aboutSafelockList = (anchor) => (
+    <AboutSafelock
+      toggleAboutSafelockDrawer={toggleAboutSafelockDrawer}
+      anchor={anchor}
+    />
   );
 
   return (
@@ -174,16 +160,16 @@ const Safelock = () => {
                         p: "15px",
                         cursor: "pointer",
                       }}
-                      onClick={toggleDrawer(anchor, true)}
+                      onClick={toggleCreateSafelockDrawer(anchor, true)}
                     >
                       Create a Safelock
                     </Typography>
                     <Drawer
                       anchor={anchor}
-                      open={state[anchor]}
-                      onClose={toggleDrawer(anchor, false)}
+                      open={createSafelock[anchor]}
+                      onClose={toggleCreateSafelockDrawer(anchor, false)}
                     >
-                      {list(anchor)}
+                      {createSafelockList(anchor)}
                     </Drawer>
                   </React.Fragment>
                 ))}
@@ -199,16 +185,16 @@ const Safelock = () => {
                         p: "15px",
                         cursor: "pointer",
                       }}
-                      onClick={toggleDrawer2(anchor, true)}
+                      onClick={toggleAboutSafelockDrawer(anchor, true)}
                     >
                       What is Safelock?
                     </Typography>
                     <Drawer
                       anchor={anchor}
-                      open={state2[anchor]}
-                      onClose={toggleDrawer2(anchor, false)}
+                      open={aboutSafelock[anchor]}
+                      onClose={toggleAboutSafelockDrawer(anchor, false)}
                     >
-                      {list2(anchor)}
+                      {aboutSafelockList(anchor)}
                     </Drawer>
                   </React.Fragment>
                 ))}
@@ -338,16 +324,16 @@ const Safelock = () => {
                         borderTopRightRadius: "0.5rem",
                         mt: "10px",
                       }}
-                      onClick={toggleDrawer(anchor, true)}
+                      onClick={toggleCreateSafelockDrawer(anchor, true)}
                     >
                       CREATE A SAFELOCK
                     </Typography>
                     <Drawer
                       anchor={anchor}
-                      open={state[anchor]}
-                      onClose={toggleDrawer(anchor, false)}
+                      open={createSafelock[anchor]}
+                      onClose={toggleCreateSafelockDrawer(anchor, false)}
                     >
-                      {list(anchor)}
+                      {createSafelockList(anchor)}
                     </Drawer>
                   </React.Fragment>
                 ))}
@@ -367,16 +353,16 @@ const Safelock = () => {
                         borderTopRightRadius: "0.5rem",
                         my: "5px",
                       }}
-                      onClick={toggleDrawer2(anchor, true)}
+                      onClick={toggleAboutSafelockDrawer(anchor, true)}
                     >
                       WHAT IS SAFELOCK?
                     </Typography>
                     <Drawer
                       anchor={anchor}
-                      open={state2[anchor]}
-                      onClose={toggleDrawer2(anchor, false)}
+                      open={aboutSafelock[anchor]}
+                      onClose={toggleAboutSafelockDrawer(anchor, false)}
                     >
-                      {list2(anchor)}
+                      {aboutSafelockList(anchor)}
                     </Drawer>
                   </React.Fragment>
                 ))}

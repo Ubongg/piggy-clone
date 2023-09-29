@@ -9,13 +9,13 @@ import {
 import InboxIcon from "@mui/icons-material/MoveToInbox";
 import MailIcon from "@mui/icons-material/Mail";
 
-const AboutSafelock = ({ toggleDrawer2, anchor }) => {
+const AboutSafelock = ({ toggleAboutSafelockDrawer, anchor }) => {
   return (
     <Box
       sx={{ width: 250 }}
       role="presentation"
-      onClick={toggleDrawer2(anchor, false)}
-      onKeyDown={toggleDrawer2(anchor, false)}
+      onClick={toggleAboutSafelockDrawer(anchor, false)}
+      onKeyDown={toggleAboutSafelockDrawer(anchor, false)}
     >
       <List>
         {["Safelock", "About", "Send email", "Safelock"].map((text, index) => (

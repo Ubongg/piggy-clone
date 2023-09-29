@@ -9,23 +9,25 @@ import React, { useState } from "react";
 import Activities from "@/components/activities/Activities";
 import Withdraw from "@/components/withdraw/Withdraw";
 import TopUpFlex from "@/components/topUpFlex/TopUpFlex";
+import { useGlobalContext } from "@/components/context/context";
 
 const Flex = () => {
   const theme = useTheme();
+  const {
+    activities,
+    toggleActivitiesDrawer,
+    topUp,
+    withdraw,
+    toggleTopUpDrawer,
+    toggleWithdrawDrawer,
+    activitiesList,
+  } = useGlobalContext();
+
   const [all, setAll] = useState(true);
   const [credit, setCredit] = useState(false);
   const [debit, setDebit] = useState(false);
 
   const [value, setValue] = useState("2");
-  const [state, setState] = React.useState({
-    right: false,
-  });
-  const [state2, setState2] = React.useState({
-    right: false,
-  });
-  const [state3, setState3] = React.useState({
-    right: false,
-  });
 
   const flexColor = "#e0218a";
 
@@ -33,49 +35,12 @@ const Flex = () => {
     setValue(newValue);
   };
 
-  const toggleDrawer = (anchor, open) => (event) => {
-    if (
-      event.type === "keydown" &&
-      (event.key === "Tab" || event.key === "Shift")
-    ) {
-      return;
-    }
-
-    setState({ ...state, [anchor]: open });
-  };
-
-  const toggleDrawer2 = (anchor, open) => (event) => {
-    if (
-      event.type === "keydown" &&
-      (event.key === "Tab" || event.key === "Shift")
-    ) {
-      return;
-    }
-
-    setState2({ ...state2, [anchor]: open });
-  };
-
-  const toggleDrawer3 = (anchor, open) => (event) => {
-    if (
-      event.type === "keydown" &&
-      (event.key === "Tab" || event.key === "Shift")
-    ) {
-      return;
-    }
-
-    setState3({ ...state3, [anchor]: open });
-  };
-
-  const list = (anchor) => (
-    <Activities toggleDrawer={toggleDrawer} anchor={anchor} />
+  const withdrawList = (anchor) => (
+    <Withdraw toggleWithdrawDrawer={toggleWithdrawDrawer} anchor={anchor} />
   );
 
-  const list2 = (anchor) => (
-    <Withdraw toggleDrawer2={toggleDrawer2} anchor={anchor} />
-  );
-
-  const list3 = (anchor) => (
-    <TopUpFlex toggleDrawer3={toggleDrawer3} anchor={anchor} />
+  const topUpList = (anchor) => (
+    <TopUpFlex toggleTopUpDrawer={toggleTopUpDrawer} anchor={anchor} />
   );
 
   return (
@@ -199,16 +164,16 @@ const Flex = () => {
                         p: "15px",
                         cursor: "pointer",
                       }}
-                      onClick={toggleDrawer3(anchor, true)}
+                      onClick={toggleTopUpDrawer(anchor, true)}
                     >
                       Top Up
                     </Typography>
                     <Drawer
                       anchor={anchor}
-                      open={state3[anchor]}
-                      onClose={toggleDrawer3(anchor, false)}
+                      open={topUp[anchor]}
+                      onClose={toggleTopUpDrawer(anchor, false)}
                     >
-                      {list3(anchor)}
+                      {topUpList(anchor)}
                     </Drawer>
                   </React.Fragment>
                 ))}
@@ -224,16 +189,16 @@ const Flex = () => {
                         p: "15px",
                         cursor: "pointer",
                       }}
-                      onClick={toggleDrawer2(anchor, true)}
+                      onClick={toggleWithdrawDrawer(anchor, true)}
                     >
                       Withdraw
                     </Typography>
                     <Drawer
                       anchor={anchor}
-                      open={state2[anchor]}
-                      onClose={toggleDrawer2(anchor, false)}
+                      open={withdraw[anchor]}
+                      onClose={toggleWithdrawDrawer(anchor, false)}
                     >
-                      {list2(anchor)}
+                      {withdrawList(anchor)}
                     </Drawer>
                   </React.Fragment>
                 ))}
@@ -363,16 +328,16 @@ const Flex = () => {
                         mb: "-15px",
                         pl: 0,
                       }}
-                      onClick={toggleDrawer(anchor, true)}
+                      onClick={toggleActivitiesDrawer(anchor, true)}
                     >
                       view more transactions
                     </Button>
                     <Drawer
                       anchor={anchor}
-                      open={state[anchor]}
-                      onClose={toggleDrawer(anchor, false)}
+                      open={activities[anchor]}
+                      onClose={toggleActivitiesDrawer(anchor, false)}
                     >
-                      {list(anchor)}
+                      {activitiesList(anchor)}
                     </Drawer>
                   </React.Fragment>
                 ))}

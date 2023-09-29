@@ -12,28 +12,13 @@ import Link from "next/link";
 import Activities from "@/components/activities/Activities";
 import { useTheme } from "@mui/material/styles";
 import ProfileButton from "@/components/profileButton/ProfileButton";
+import { useGlobalContext } from "@/components/context/context";
 
 const Home = () => {
   const theme = useTheme();
 
-  const [state, setState] = React.useState({
-    right: false,
-  });
-
-  const toggleDrawer = (anchor, open) => (event) => {
-    if (
-      event.type === "keydown" &&
-      (event.key === "Tab" || event.key === "Shift")
-    ) {
-      return;
-    }
-
-    setState({ ...state, [anchor]: open });
-  };
-
-  const list = (anchor) => (
-    <Activities toggleDrawer={toggleDrawer} anchor={anchor} />
-  );
+  const { activities, toggleActivitiesDrawer, activitiesList } =
+    useGlobalContext();
 
   return (
     <Box
@@ -165,7 +150,7 @@ const Home = () => {
         {["right"].map((anchor) => (
           <React.Fragment key={anchor}>
             <Box
-              onClick={toggleDrawer(anchor, true)}
+              onClick={toggleActivitiesDrawer(anchor, true)}
               sx={{
                 cursor: "pointer",
                 display: "flex",
@@ -203,10 +188,10 @@ const Home = () => {
             </Box>
             <Drawer
               anchor={anchor}
-              open={state[anchor]}
-              onClose={toggleDrawer(anchor, false)}
+              open={activities[anchor]}
+              onClose={toggleActivitiesDrawer(anchor, false)}
             >
-              {list(anchor)}
+              {activitiesList(anchor)}
             </Drawer>
           </React.Fragment>
         ))}
@@ -292,16 +277,16 @@ const Home = () => {
                 mt: "10px",
                 pl: 0,
               }}
-              onClick={toggleDrawer(anchor, true)}
+              onClick={toggleActivitiesDrawer(anchor, true)}
             >
               view more activities
             </Button>
             <Drawer
               anchor={anchor}
-              open={state[anchor]}
-              onClose={toggleDrawer(anchor, false)}
+              open={activities[anchor]}
+              onClose={toggleActivitiesDrawer(anchor, false)}
             >
-              {list(anchor)}
+              {activitiesList(anchor)}
             </Drawer>
           </React.Fragment>
         ))}

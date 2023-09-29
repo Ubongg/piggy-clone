@@ -9,13 +9,13 @@ import {
 import InboxIcon from "@mui/icons-material/MoveToInbox";
 import MailIcon from "@mui/icons-material/Mail";
 
-const Withdraw = ({ toggleDrawer2, anchor }) => {
+const Withdraw = ({ toggleWithdrawDrawer, anchor }) => {
   return (
     <Box
       sx={{ width: 250 }}
       role="presentation"
-      onClick={toggleDrawer2(anchor, false)}
-      onKeyDown={toggleDrawer2(anchor, false)}
+      onClick={toggleWithdrawDrawer(anchor, false)}
+      onKeyDown={toggleWithdrawDrawer(anchor, false)}
     >
       <List>
         {["Withdraw", "About", "Send email", "Withdraw"].map((text, index) => (

@@ -9,16 +9,16 @@ import {
 import InboxIcon from "@mui/icons-material/MoveToInbox";
 import MailIcon from "@mui/icons-material/Mail";
 
-const CreateSafelock = ({ toggleDrawer, anchor }) => {
+const CreateSafelock = ({ toggleCreateSafelockDrawer, anchor }) => {
   return (
     <Box
       sx={{ width: 250 }}
       role="presentation"
-      onClick={toggleDrawer(anchor, false)}
-      onKeyDown={toggleDrawer(anchor, false)}
+      onClick={toggleCreateSafelockDrawer(anchor, false)}
+      onKeyDown={toggleCreateSafelockDrawer(anchor, false)}
     >
       <List>
-        {["Inbox", "Starred", "Send email", "Safelock"].map((text, index) => (
+        {["Create", "Starred", "Send email", "Safelock"].map((text, index) => (
           <ListItem key={text} disablePadding>
             <ListItemButton>
               <ListItemIcon>
