@@ -4,6 +4,7 @@ import { Box, ThemeProvider } from "@mui/material";
 import { theme } from "@/components/theme/theme";
 import Sidebar from "@/components/sidebar/Sidebar";
 import { AppProvider } from "@/components/context/context";
+import BottomNav from "@/components/bottomNav/BottomNav";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -21,6 +22,7 @@ export default function RootLayout({ children }) {
             <Box sx={{ display: "flex" }}>
               <Sidebar />
               {children}
+              <BottomNav />
             </Box>
           </AppProvider>
         </ThemeProvider>

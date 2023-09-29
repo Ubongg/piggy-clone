@@ -281,6 +281,9 @@ const Safelock = () => {
                   sx={{
                     fontSize: "1.5rem",
                     fontWeight: 600,
+                    [theme.breakpoints.down("sm")]: {
+                      fontSize: "1.3rem",
+                    },
                   }}
                 >
                   Create a Safelock
@@ -291,6 +294,9 @@ const Safelock = () => {
                     sx={{
                       fontSize: "1rem",
                       my: "5px",
+                      [theme.breakpoints.down("sm")]: {
+                        fontSize: "0.9rem",
+                      },
                     }}
                   >
                     You have no SafeLock setup. Let's help you get started.
@@ -301,6 +307,9 @@ const Safelock = () => {
                     sx={{
                       fontSize: "1rem",
                       my: "5px",
+                      [theme.breakpoints.down("sm")]: {
+                        fontSize: "0.9rem",
+                      },
                     }}
                   >
                     You have no completed safelocks just yet. Let's get you
@@ -317,12 +326,17 @@ const Safelock = () => {
                         fontSize: "0.9rem",
                         fontWeight: 600,
                         border: "1px solid rgb(224, 222, 222)",
-                        p: "8px 50px",
+                        py: "8px",
+                        width: "230px",
                         cursor: "pointer",
                         borderBottomRightRadius: "0.5rem",
                         borderTopLeftRadius: "0.5rem",
                         borderTopRightRadius: "0.5rem",
                         mt: "10px",
+                        [theme.breakpoints.down("sm")]: {
+                          fontSize: "0.7rem",
+                          width: "170px",
+                        },
                       }}
                       onClick={toggleCreateSafelockDrawer(anchor, true)}
                     >
@@ -346,12 +360,17 @@ const Safelock = () => {
                         fontSize: "0.9rem",
                         fontWeight: 600,
                         border: `1px solid ${safeColor}`,
-                        p: "8px 60px",
+                        py: "8px",
+                        width: "250px",
                         cursor: "pointer",
                         borderBottomRightRadius: "0.5rem",
                         borderTopLeftRadius: "0.5rem",
                         borderTopRightRadius: "0.5rem",
                         my: "5px",
+                        [theme.breakpoints.down("sm")]: {
+                          fontSize: "0.7rem",
+                          width: "190px",
+                        },
                       }}
                       onClick={toggleAboutSafelockDrawer(anchor, true)}
                     >
