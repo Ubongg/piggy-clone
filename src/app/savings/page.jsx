@@ -7,9 +7,11 @@ import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 import Link from "next/link";
 import { useTheme } from "@mui/material/styles";
 import ProfileButton from "@/components/profileButton/ProfileButton";
+import { useGlobalContext } from "@/components/context/context";
 
 const Savings = () => {
   const theme = useTheme();
+  const { open } = useGlobalContext();
 
   return (
     <Box
@@ -66,8 +68,12 @@ const Savings = () => {
         sx={{
           display: "flex",
           gap: "1.5rem",
+          width: open ? "80%" : "65%",
           [theme.breakpoints.down("sm")]: {
             gap: "1rem",
+          },
+          [theme.breakpoints.down("md")]: {
+            width: "100%",
           },
         }}
       >

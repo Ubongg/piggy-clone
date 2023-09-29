@@ -6,6 +6,8 @@ import Activities from "../activities/Activities";
 const AppContext = React.createContext();
 
 const AppProvider = ({ children }) => {
+  const [open, setOpen] = React.useState(false);
+
   const [activities, setActivities] = React.useState({
     right: false,
   });
@@ -87,6 +89,8 @@ const AppProvider = ({ children }) => {
   return (
     <AppContext.Provider
       value={{
+        open,
+        setOpen,
         activities,
         toggleActivitiesDrawer,
         topUp,

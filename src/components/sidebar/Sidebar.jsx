@@ -15,6 +15,7 @@ import MenuIcon from "@mui/icons-material/Menu";
 import SavingsIcon from "@mui/icons-material/Savings";
 import PowerSettingsNewIcon from "@mui/icons-material/PowerSettingsNew";
 import Link from "next/link";
+import { useGlobalContext } from "../context/context";
 
 const drawerWidth = 240;
 
@@ -61,7 +62,7 @@ const Drawer = styled(MuiDrawer, {
 
 export default function Sidebar() {
   const theme = useTheme();
-  const [open, setOpen] = React.useState(false);
+  const { open, setOpen } = useGlobalContext();
 
   return (
     <Box
