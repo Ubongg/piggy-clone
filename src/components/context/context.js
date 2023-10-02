@@ -6,6 +6,8 @@ import Activities from "../activities/Activities";
 const AppContext = React.createContext();
 
 const AppProvider = ({ children }) => {
+  const safeColor = "#0066b2";
+
   const [open, setOpen] = React.useState(false);
 
   const [activities, setActivities] = React.useState({
@@ -89,6 +91,7 @@ const AppProvider = ({ children }) => {
   return (
     <AppContext.Provider
       value={{
+        safeColor,
         open,
         setOpen,
         activities,

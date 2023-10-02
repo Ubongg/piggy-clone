@@ -17,12 +17,11 @@ const Safelock = () => {
     aboutSafelock,
     toggleAboutSafelockDrawer,
     toggleCreateSafelockDrawer,
+    safeColor,
   } = useGlobalContext();
 
   const [ongoing, setOngoing] = useState(true);
   const [value, setValue] = useState("1");
-
-  const safeColor = "#0066b2";
 
   const handleChange = (event, newValue) => {
     setValue(newValue);
