@@ -11,8 +11,11 @@ const AboutSafelock = ({ toggleAboutSafelockDrawer, anchor }) => {
   return (
     <Box
       sx={{
+        display: "flex",
+        flexDirection: "column",
         width: 450,
-        padding: "30px",
+        height: "100vh",
+        padding: "30px 25px",
         [theme.breakpoints.down("xs")]: {
           width: "100vw",
         },
@@ -36,47 +39,70 @@ const AboutSafelock = ({ toggleAboutSafelockDrawer, anchor }) => {
         sx={{
           display: "flex",
           alignItems: "center",
-          justifyContent: "center",
+          justifyContent: "space-between",
           flexDirection: "column",
           textAlign: "center",
+          height: "100%",
         }}
       >
-        <Image
-          src="/assets/safelock.png"
-          width={250}
-          height={250}
-          alt=""
-          style={{ marginTop: "30px" }}
-        />
-        <Typography
-          variant="h6"
-          color={safeColor}
+        <Box
           sx={{
-            fontSize: "1.4rem",
-            fontWeight: 600,
-            my: "30px",
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+            flexDirection: "column",
+            textAlign: "center",
+            height: "100%",
           }}
         >
-          What is Safelock?
-        </Typography>
-        <Typography
-          variant="p"
-          sx={{
-            fontSize: "1rem",
-            mb: "30px",
-          }}
-        >
-          Safelock allows you to set money aside for a fixed period of time
-          without having access to it until maturity. It's like having your own
-          custom fixed deposit.
-        </Typography>
+          <Image
+            src="/assets/safelock.png"
+            width={250}
+            height={250}
+            alt=""
+            // style={{ marginTop: "20%" }}
+          />
+          <Box
+            sx={{
+              mt: "30px",
+              display: "flex",
+              flexDirection: "column",
+              gap: "1rem",
+            }}
+          >
+            <Typography
+              variant="h6"
+              color={safeColor}
+              sx={{
+                fontSize: "1.4rem",
+                fontWeight: 600,
+              }}
+            >
+              What is Safelock?
+            </Typography>
+            <Typography
+              variant="p"
+              sx={{
+                fontSize: "1rem",
+              }}
+            >
+              Safelock allows you to set money aside for a fixed period of time
+              without having access to it until maturity. It's like having your
+              own custom fixed deposit.
+            </Typography>
+          </Box>
+        </Box>
         <Button
           variant="contained"
           sx={{
             width: "100%",
-            mt: "50px",
-            py: "10px",
+            py: "12px",
             fontWeight: 600,
+            mt: "auto",
+            borderBottomRightRadius: "0.5rem",
+            borderTopLeftRadius: "0.5rem",
+            borderTopRightRadius: "0.5rem",
+            borderBottomLeftRadius: 0,
           }}
           onClick={toggleAboutSafelockDrawer(anchor, false)}
         >
