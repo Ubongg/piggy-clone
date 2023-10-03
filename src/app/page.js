@@ -17,8 +17,7 @@ import { useGlobalContext } from "@/components/context/context";
 const Home = () => {
   const theme = useTheme();
 
-  const { activities, toggleActivitiesDrawer, activitiesList } =
-    useGlobalContext();
+  const { activities, toggleActivitiesDrawer } = useGlobalContext();
 
   return (
     <Box
@@ -191,7 +190,10 @@ const Home = () => {
               open={activities[anchor]}
               onClose={toggleActivitiesDrawer(anchor, false)}
             >
-              {activitiesList(anchor)}
+              <Activities
+                toggleActivitiesDrawer={toggleActivitiesDrawer}
+                anchor={anchor}
+              />
             </Drawer>
           </React.Fragment>
         ))}
@@ -286,7 +288,10 @@ const Home = () => {
               open={activities[anchor]}
               onClose={toggleActivitiesDrawer(anchor, false)}
             >
-              {activitiesList(anchor)}
+              <Activities
+                toggleActivitiesDrawer={toggleActivitiesDrawer}
+                anchor={anchor}
+              />
             </Drawer>
           </React.Fragment>
         ))}

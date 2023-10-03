@@ -1,12 +1,12 @@
 "use client";
 
 import React, { useState, useContext } from "react";
-import Activities from "../activities/Activities";
 
 const AppContext = React.createContext();
 
 const AppProvider = ({ children }) => {
   const safeColor = "#0066b2";
+  const greyBorder = "rgb(224, 222, 222)";
 
   const [open, setOpen] = React.useState(false);
 
@@ -81,13 +81,6 @@ const AppProvider = ({ children }) => {
     setAboutSafelock({ ...aboutSafelock, [anchor]: open });
   };
 
-  const activitiesList = (anchor) => (
-    <Activities
-      toggleActivitiesDrawer={toggleActivitiesDrawer}
-      anchor={anchor}
-    />
-  );
-
   return (
     <AppContext.Provider
       value={{
@@ -100,11 +93,11 @@ const AppProvider = ({ children }) => {
         withdraw,
         toggleTopUpDrawer,
         toggleWithdrawDrawer,
-        activitiesList,
         createSafelock,
         aboutSafelock,
         toggleAboutSafelockDrawer,
         toggleCreateSafelockDrawer,
+        greyBorder,
       }}
     >
       {children}

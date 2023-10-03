@@ -30,10 +30,11 @@ const AboutSafelock = ({ toggleAboutSafelockDrawer, anchor }) => {
           justifyContent: "flex-end",
           color: safeColor,
           cursor: "pointer",
+          fontSize: "2.5rem",
         }}
         onClick={toggleAboutSafelockDrawer(anchor, false)}
       >
-        <CloseIcon />
+        <CloseIcon style={{ fontSize: "2rem" }} />
       </Box>
       <Box
         sx={{

@@ -1,6 +1,7 @@
 import "./globals.css";
 import { Inter } from "next/font/google";
-import { Box, ThemeProvider } from "@mui/material";
+import { Box } from "@mui/material";
+import { ThemeProvider } from "@mui/material/styles";
 import { theme } from "@/components/theme/theme";
 import Sidebar from "@/components/sidebar/Sidebar";
 import { AppProvider } from "@/components/context/context";

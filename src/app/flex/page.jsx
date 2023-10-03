@@ -20,7 +20,6 @@ const Flex = () => {
     withdraw,
     toggleTopUpDrawer,
     toggleWithdrawDrawer,
-    activitiesList,
   } = useGlobalContext();
 
   const [all, setAll] = useState(true);
@@ -34,14 +33,6 @@ const Flex = () => {
   const handleChange = (event, newValue) => {
     setValue(newValue);
   };
-
-  const withdrawList = (anchor) => (
-    <Withdraw toggleWithdrawDrawer={toggleWithdrawDrawer} anchor={anchor} />
-  );
-
-  const topUpList = (anchor) => (
-    <TopUpFlex toggleTopUpDrawer={toggleTopUpDrawer} anchor={anchor} />
-  );
 
   return (
     <Box
@@ -173,7 +164,10 @@ const Flex = () => {
                       open={topUp[anchor]}
                       onClose={toggleTopUpDrawer(anchor, false)}
                     >
-                      {topUpList(anchor)}
+                      <TopUpFlex
+                        toggleTopUpDrawer={toggleTopUpDrawer}
+                        anchor={anchor}
+                      />
                     </Drawer>
                   </React.Fragment>
                 ))}
@@ -198,7 +192,10 @@ const Flex = () => {
                       open={withdraw[anchor]}
                       onClose={toggleWithdrawDrawer(anchor, false)}
                     >
-                      {withdrawList(anchor)}
+                      <Withdraw
+                        toggleWithdrawDrawer={toggleWithdrawDrawer}
+                        anchor={anchor}
+                      />
                     </Drawer>
                   </React.Fragment>
                 ))}
@@ -337,7 +334,10 @@ const Flex = () => {
                       open={activities[anchor]}
                       onClose={toggleActivitiesDrawer(anchor, false)}
                     >
-                      {activitiesList(anchor)}
+                      <Activities
+                        toggleActivitiesDrawer={toggleActivitiesDrawer}
+                        anchor={anchor}
+                      />
                     </Drawer>
                   </React.Fragment>
                 ))}

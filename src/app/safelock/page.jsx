@@ -6,9 +6,9 @@ import { useTheme } from "@mui/material/styles";
 import ProfileButton from "@/components/profileButton/ProfileButton";
 import { TabPanel, TabList, TabContext } from "@mui/lab";
 import React, { useState } from "react";
-import CreateSafelock from "@/components/createSafelock/createSafelock";
 import AboutSafelock from "@/components/aboutSafelock/AboutSafelock";
 import { useGlobalContext } from "@/components/context/context";
+import MakeSafelock from "@/components/makeSafelock/MakeSafelock";
 
 const Safelock = () => {
   const theme = useTheme();
@@ -26,20 +26,6 @@ const Safelock = () => {
   const handleChange = (event, newValue) => {
     setValue(newValue);
   };
-
-  const createSafelockList = (anchor) => (
-    <CreateSafelock
-      toggleCreateSafelockDrawer={toggleCreateSafelockDrawer}
-      anchor={anchor}
-    />
-  );
-
-  const aboutSafelockList = (anchor) => (
-    <AboutSafelock
-      toggleAboutSafelockDrawer={toggleAboutSafelockDrawer}
-      anchor={anchor}
-    />
-  );
 
   return (
     <Box
@@ -168,7 +154,10 @@ const Safelock = () => {
                       open={createSafelock[anchor]}
                       onClose={toggleCreateSafelockDrawer(anchor, false)}
                     >
-                      {createSafelockList(anchor)}
+                      <MakeSafelock
+                        toggleCreateSafelockDrawer={toggleCreateSafelockDrawer}
+                        anchor={anchor}
+                      />
                     </Drawer>
                   </React.Fragment>
                 ))}
@@ -193,7 +182,10 @@ const Safelock = () => {
                       open={aboutSafelock[anchor]}
                       onClose={toggleAboutSafelockDrawer(anchor, false)}
                     >
-                      {aboutSafelockList(anchor)}
+                      <AboutSafelock
+                        toggleAboutSafelockDrawer={toggleAboutSafelockDrawer}
+                        anchor={anchor}
+                      />
                     </Drawer>
                   </React.Fragment>
                 ))}
@@ -346,7 +338,10 @@ const Safelock = () => {
                       open={createSafelock[anchor]}
                       onClose={toggleCreateSafelockDrawer(anchor, false)}
                     >
-                      {createSafelockList(anchor)}
+                      <MakeSafelock
+                        toggleCreateSafelockDrawer={toggleCreateSafelockDrawer}
+                        anchor={anchor}
+                      />
                     </Drawer>
                   </React.Fragment>
                 ))}
@@ -380,7 +375,10 @@ const Safelock = () => {
                       open={aboutSafelock[anchor]}
                       onClose={toggleAboutSafelockDrawer(anchor, false)}
                     >
-                      {aboutSafelockList(anchor)}
+                      <AboutSafelock
+                        toggleAboutSafelockDrawer={toggleAboutSafelockDrawer}
+                        anchor={anchor}
+                      />
                     </Drawer>
                   </React.Fragment>
                 ))}
