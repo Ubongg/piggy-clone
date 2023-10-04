@@ -16,3 +16,14 @@ body {
 a {
   text-decoration: none;
 }
+.datePickerStyle {
+  outline: none;
+  padding: 17px 15px 19px;
+  border: none;
+  background: #edf2f7;
+  margin-bottom: 30px;
+  width: 100%;
+  font-size: 1rem;
+  color: rgb(119, 118, 118);
+  border-radius: 0.5rem;
+}
