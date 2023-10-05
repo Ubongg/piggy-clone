@@ -1,36 +1,40 @@
-import {
-  Box,
-  List,
-  ListItem,
-  ListItemButton,
-  ListItemIcon,
-  ListItemText,
-} from "@mui/material";
-import InboxIcon from "@mui/icons-material/MoveToInbox";
-import MailIcon from "@mui/icons-material/Mail";
+import { Box } from "@mui/material";
+import CloseIcon from "@mui/icons-material/Close";
+import { useTheme } from "@mui/material/styles";
+import { useGlobalContext } from "../context/context";
 
 const Activities = ({ toggleActivitiesDrawer, anchor }) => {
+  const theme = useTheme();
+  const { safeColor } = useGlobalContext();
+
   return (
     <Box
-      sx={{ width: 250 }}
+      sx={{
+        display: "flex",
+        flexDirection: "column",
+        width: 450,
+        height: "100vh",
+        padding: "30px 25px",
+        [theme.breakpoints.down("xs")]: {
+          width: "100vw",
+        },
+      }}
       role="presentation"
-      onClick={toggleActivitiesDrawer(anchor, false)}
-      onKeyDown={toggleActivitiesDrawer(anchor, false)}
     >
-      <List>
-        {["Activities", "Starred", "Send email", "Drafts"].map(
-          (text, index) => (
-            <ListItem key={text} disablePadding>
-              <ListItemButton>
-                <ListItemIcon>
-                  {index % 2 === 0 ? <InboxIcon /> : <MailIcon />}
-                </ListItemIcon>
-                <ListItemText primary={text} />
-              </ListItemButton>
-            </ListItem>
-          )
-        )}
-      </List>
+      <Box
+        sx={{
+          display: "flex",
+          alignItems: "flex-end",
+          justifyContent: "flex-end",
+          cursor: "pointer",
+          fontSize: "2.5rem",
+          color: safeColor,
+        }}
+        onClick={toggleActivitiesDrawer(anchor, false)}
+      >
+        <CloseIcon style={{ fontSize: "2rem" }} />
+      </Box>
+      Activities
     </Box>
   );
 };

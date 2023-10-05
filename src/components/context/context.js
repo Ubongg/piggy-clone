@@ -7,6 +7,7 @@ const AppContext = React.createContext();
 const AppProvider = ({ children }) => {
   const safeColor = "#0066b2";
   const greyBorder = "rgb(224, 222, 222)";
+  const flexColor = "#e0218a";
 
   const [open, setOpen] = React.useState(false);
 
@@ -98,6 +99,7 @@ const AppProvider = ({ children }) => {
         toggleAboutSafelockDrawer,
         toggleCreateSafelockDrawer,
         greyBorder,
+        flexColor,
       }}
     >
       {children}

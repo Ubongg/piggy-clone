@@ -20,6 +20,8 @@ const Flex = () => {
     withdraw,
     toggleTopUpDrawer,
     toggleWithdrawDrawer,
+    flexColor,
+    greyBorder,
   } = useGlobalContext();
 
   const [all, setAll] = useState(true);
@@ -27,8 +29,6 @@ const Flex = () => {
   const [debit, setDebit] = useState(false);
 
   const [value, setValue] = useState("2");
-
-  const flexColor = "#e0218a";
 
   const handleChange = (event, newValue) => {
     setValue(newValue);

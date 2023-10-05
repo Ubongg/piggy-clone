@@ -1,71 +1,65 @@
-import { Box, Typography, Drawer, Button } from "@mui/material";
-import { useTheme } from "@mui/material/styles";
-import CloseIcon from "@mui/icons-material/Close";
-import { useGlobalContext } from "../context/context";
-import React, { useState } from "react";
-import DatePicker from "react-datepicker";
-import "react-datepicker/dist/react-datepicker.css";
-import "@/app/globals.css";
+"use client";
 
-const MakeSafelock = ({ toggleCreateSafelockDrawer, anchor }) => {
-  const theme = useTheme();
-  const { safeColor, greyBorder } = useGlobalContext();
-  const falseDate = (date) => new Date() < date;
-  const [payBackDate, setPayBackDate] = useState(new Date());
+import { useGlobalContext } from "@/components/context/context";
+import Link from "next/link";
+const { Box, Typography, Button } = require("@mui/material");
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-  };
+const Register = () => {
+  const { safeColor } = useGlobalContext();
 
   return (
     <Box
       sx={{
         display: "flex",
+        justifyContent: "center",
+        alignItems: "center",
         flexDirection: "column",
-        width: 450,
         height: "100vh",
-        padding: "30px 25px",
-        [theme.breakpoints.down("xs")]: {
-          width: "100vw",
-        },
+        width: "100%",
+        background: "#27374D",
+        px: "15px",
       }}
-      role="presentation"
     >
       <Box
         sx={{
           display: "flex",
-          alignItems: "flex-end",
-          justifyContent: "flex-end",
-          cursor: "pointer",
-          fontSize: "2.5rem",
-          color: safeColor,
-        }}
-        onClick={toggleCreateSafelockDrawer(anchor, false)}
-      >
-        <CloseIcon style={{ fontSize: "2rem" }} />
-      </Box>
-      <Box
-        sx={{
-          my: "30px",
+          justifyContent: "center",
+          alignItems: "center",
+          flexDirection: "column",
+          maxWidth: "450px",
+          width: "100%",
+          background: "#fff",
+          p: "30px",
+          border: "1px solid rgb(224, 222, 222)",
+          borderBottomRightRadius: "1.5rem",
+          borderTopLeftRadius: "1.5rem",
+          borderTopRightRadius: "1.5rem",
         }}
       >
         <Typography
           variant="h6"
           color={safeColor}
+          fontWeight={600}
+          sx={{ textAlign: "center" }}
+        >
+          Create a Secure Account
+        </Typography>
+        <Typography
+          variant="p"
           sx={{
-            fontSize: "1.4rem",
-            fontWeight: 600,
+            fontSize: "0.85rem",
+            textAlign: "center",
           }}
         >
-          Create a Safelock to Lock Funds
+          Welcome to the future of Savings & Investments
         </Typography>
         <form
           style={{
             paddingTop: "30px",
             display: "flex",
             flexDirection: "column",
+            width: "100%",
           }}
-          onSubmit={handleSubmit}
         >
           <label
             style={{
@@ -74,36 +68,11 @@ const MakeSafelock = ({ toggleCreateSafelockDrawer, anchor }) => {
               fontWeight: 600,
             }}
           >
-            Amount to Lock / Invest
-          </label>
-          <input
-            type="number"
-            placeholder="25000"
-            required
-            style={{
-              outline: "none",
-              padding: "17px 15px 19px",
-              border: "none",
-              background: "#edf2f7",
-              marginBottom: "30px",
-              width: "100%",
-              fontSize: "1rem",
-              borderRadius: "0.5rem",
-            }}
-            className="amountInput"
-          />
-          <label
-            style={{
-              margin: "5px 0",
-              fontSize: "0.75rem",
-              fontWeight: 600,
-            }}
-          >
-            Title of SafeLock™
+            Full Name
           </label>
           <input
             type="text"
-            placeholder="My New Lock"
+            placeholder="Full Name"
             required
             style={{
               outline: "none",
@@ -123,16 +92,46 @@ const MakeSafelock = ({ toggleCreateSafelockDrawer, anchor }) => {
               fontWeight: 600,
             }}
           >
-            Set Payback Date
+            Email
           </label>
-          <DatePicker
-            filterDate={falseDate}
-            minTime={new Date(0, 0, 0, 9, 0)}
-            maxTime={new Date(0, 0, 0, 19, 0)}
-            selected={payBackDate}
-            onChange={(payBackDate) => setPayBackDate(payBackDate)}
+          <input
+            type="text"
+            placeholder="Email Address"
             required
-            className="datePickerStyle"
+            style={{
+              outline: "none",
+              padding: "17px 15px 19px",
+              border: "none",
+              background: "#edf2f7",
+              marginBottom: "30px",
+              width: "100%",
+              fontSize: "1rem",
+              borderRadius: "0.5rem",
+            }}
+          />
+          <label
+            style={{
+              margin: "5px 0",
+              fontSize: "0.75rem",
+              fontWeight: 600,
+            }}
+          >
+            Password
+          </label>
+          <input
+            type="text"
+            placeholder="Password"
+            required
+            style={{
+              outline: "none",
+              padding: "17px 15px 19px",
+              border: "none",
+              background: "#edf2f7",
+              marginBottom: "30px",
+              width: "100%",
+              fontSize: "1rem",
+              borderRadius: "0.5rem",
+            }}
           />
           <Button
             variant="contained"
@@ -145,13 +144,24 @@ const MakeSafelock = ({ toggleCreateSafelockDrawer, anchor }) => {
               borderTopLeftRadius: "0.5rem",
               borderTopRightRadius: "0.5rem",
               borderBottomLeftRadius: 0,
+              background: safeColor,
             }}
           >
-            submit
+            create account
           </Button>
         </form>
       </Box>
+      <Link
+        href="/login"
+        style={{
+          color: "#fff",
+          fontSize: "0.85rem",
+          marginTop: "30px",
+        }}
+      >
+        Already have an account? Login
+      </Link>
     </Box>
   );
 };
-export default MakeSafelock;
+export default Register;
