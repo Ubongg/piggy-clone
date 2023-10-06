@@ -8,211 +8,228 @@ import Link from "next/link";
 import { useTheme } from "@mui/material/styles";
 import ProfileButton from "@/components/profileButton/ProfileButton";
 import { useGlobalContext } from "@/components/context/context";
+import { useSession } from "next-auth/react";
+import { useRouter } from "next/navigation";
+import { useEffect } from "react";
 
 const Savings = () => {
+  const session = useSession();
+  const router = useRouter();
   const theme = useTheme();
   const { open } = useGlobalContext();
 
-  return (
-    <Box
-      sx={{
-        width: "100%",
-        m: "38px 45px",
-        [theme.breakpoints.down("sm")]: {
-          m: "38px 15px",
-        },
-      }}
-    >
+  useEffect(() => {
+    if (session.status === "unauthenticated") {
+      router?.push("/login");
+    }
+  }, [session.status, router]);
+
+  if (session.status === "authenticated") {
+    return (
       <Box
         sx={{
-          display: "flex",
-          justifyContent: "space-between",
           width: "100%",
-        }}
-      >
-        <Box>
-          <Typography variant="h5" fontWeight={600} fontSize="1.8rem">
-            Savings
-          </Typography>
-          <Typography variant="p">Let's see how well you're doing.</Typography>
-        </Box>
-        <ProfileButton />
-      </Box>
-      <Box
-        sx={{
-          border: "1px solid rgb(224, 222, 222)",
-          borderBottomRightRadius: "0.5rem",
-          borderTopLeftRadius: "0.5rem",
-          borderTopRightRadius: "0.5rem",
-          p: "15px 15px 20px",
-          my: "40px",
-          width: "65%",
-          [theme.breakpoints.down("md")]: {
-            width: "100%",
-          },
-        }}
-      >
-        <Typography variant="h6" fontSize="0.8rem">
-          Total Balance
-        </Typography>
-        <Typography
-          variant="h4"
-          fontSize="2.4rem"
-          color="#27374D"
-          fontWeight={600}
-        >
-          N0.00
-        </Typography>
-      </Box>
-      <Box
-        sx={{
-          display: "flex",
-          gap: "1.5rem",
-          width: open ? "80%" : "65%",
+          m: "38px 45px",
           [theme.breakpoints.down("sm")]: {
-            gap: "1rem",
-          },
-          [theme.breakpoints.down("md")]: {
-            width: "100%",
+            m: "38px 15px",
           },
         }}
       >
-        <Link
-          href="/flex"
-          style={{ flexGrow: 1, flexShrink: 1, flexBasis: "0%" }}
+        <Box
+          sx={{
+            display: "flex",
+            justifyContent: "space-between",
+            width: "100%",
+          }}
         >
-          <Card
-            sx={{
-              display: "flex",
-              maxWidth: "250px",
-              maxHeight: "250px",
-              p: "30px 20px",
-              flexDirection: "column",
-              gap: "0.9rem",
-              background: "#ffd7e9",
-              boxShadow: "none",
-              cursor: "pointer",
-              borderBottomRightRadius: "1rem",
-              borderTopLeftRadius: "1rem",
-              borderTopRightRadius: "1rem",
-              borderBottomLeftRadius: "0.5rem",
-              [theme.breakpoints.down("sm")]: {
-                gap: "0.3rem",
-              },
-            }}
-          >
-            <AccountBalanceOutlinedIcon
-              style={{ fontSize: "2rem", color: "#e0218a" }}
-            />
-            <Typography
-              variant="h5"
-              sx={{
-                color: "#e0218a",
-                fontWeight: 600,
-                fontSize: "1.2rem",
-                [theme.breakpoints.down("sm")]: {
-                  fontSize: "1rem",
-                },
-              }}
-            >
-              Flex Naira
+          <Box>
+            <Typography variant="h5" fontWeight={600} fontSize="1.8rem">
+              Savings
             </Typography>
-            <Typography
-              variant="p"
-              sx={{
-                color: "black",
-                fontSize: "0.9rem",
-                [theme.breakpoints.down("sm")]: {
-                  fontSize: "0.8rem",
-                },
-              }}
-            >
-              Flexible savings for emergencies. Free transfers, withdrawals etc.
-              8% p.a
+            <Typography variant="p">
+              Let's see how well you're doing.
             </Typography>
-            <Typography
-              variant="p"
-              sx={{
-                fontWeight: 600,
-                color: "#e0218a",
-                fontSize: "1.1rem",
-                [theme.breakpoints.down("sm")]: {
-                  fontSize: "0.9rem",
-                },
-              }}
-            >
-              N0.00
-            </Typography>
-          </Card>
-        </Link>
-        <Link
-          href="/safelock"
-          style={{ flexGrow: 1, flexShrink: 1, flexBasis: "0%" }}
+          </Box>
+          <ProfileButton />
+        </Box>
+        <Box
+          sx={{
+            border: "1px solid rgb(224, 222, 222)",
+            borderBottomRightRadius: "0.5rem",
+            borderTopLeftRadius: "0.5rem",
+            borderTopRightRadius: "0.5rem",
+            p: "15px 15px 20px",
+            my: "40px",
+            width: "65%",
+            [theme.breakpoints.down("md")]: {
+              width: "100%",
+            },
+          }}
         >
-          <Card
-            sx={{
-              display: "flex",
-              maxWidth: "250px",
-              maxHeight: "250px",
-              p: "30px 20px",
-              flexDirection: "column",
-              gap: "0.9rem",
-              background: "#9fd7fe",
-              cursor: "pointer",
-              boxShadow: "none",
-              borderBottomRightRadius: "1rem",
-              borderTopLeftRadius: "1rem",
-              borderTopRightRadius: "1rem",
-              borderBottomLeftRadius: "0.5rem",
-              [theme.breakpoints.down("sm")]: {
-                gap: "0.3rem",
-              },
-            }}
+          <Typography variant="h6" fontSize="0.8rem">
+            Total Balance
+          </Typography>
+          <Typography
+            variant="h4"
+            fontSize="2.4rem"
+            color="#27374D"
+            fontWeight={600}
           >
-            <LockOutlinedIcon style={{ fontSize: "2rem", color: "#0066b2" }} />
-            <Typography
-              variant="h5"
+            N0.00
+          </Typography>
+        </Box>
+        <Box
+          sx={{
+            display: "flex",
+            gap: "1.5rem",
+            width: open ? "80%" : "65%",
+            [theme.breakpoints.down("sm")]: {
+              gap: "1rem",
+            },
+            [theme.breakpoints.down("md")]: {
+              width: "100%",
+            },
+          }}
+        >
+          <Link
+            href="/flex"
+            style={{ flexGrow: 1, flexShrink: 1, flexBasis: "0%" }}
+          >
+            <Card
               sx={{
-                color: "#0066b2",
-                fontWeight: 600,
-                fontSize: "1.2rem",
+                display: "flex",
+                maxWidth: "250px",
+                maxHeight: "250px",
+                p: "30px 20px",
+                flexDirection: "column",
+                gap: "0.9rem",
+                background: "#ffd7e9",
+                boxShadow: "none",
+                cursor: "pointer",
+                borderBottomRightRadius: "1rem",
+                borderTopLeftRadius: "1rem",
+                borderTopRightRadius: "1rem",
+                borderBottomLeftRadius: "0.5rem",
                 [theme.breakpoints.down("sm")]: {
-                  fontSize: "1rem",
+                  gap: "0.3rem",
                 },
               }}
             >
-              Safelock
-            </Typography>
-            <Typography
-              variant="p"
-              sx={{
-                color: "black",
-                fontSize: "0.9rem",
-                [theme.breakpoints.down("sm")]: {
-                  fontSize: "0.8rem",
-                },
-              }}
-            >
-              Lock funds to avoid spending temptations. Upfront interest. Up to
-              13% p.a
-            </Typography>
-            <Typography
-              variant="p"
-              sx={{
-                fontWeight: 600,
-                color: "#0066b2",
-                fontSize: "1.1rem",
-                [theme.breakpoints.down("sm")]: {
+              <AccountBalanceOutlinedIcon
+                style={{ fontSize: "2rem", color: "#e0218a" }}
+              />
+              <Typography
+                variant="h5"
+                sx={{
+                  color: "#e0218a",
+                  fontWeight: 600,
+                  fontSize: "1.2rem",
+                  [theme.breakpoints.down("sm")]: {
+                    fontSize: "1rem",
+                  },
+                }}
+              >
+                Flex Naira
+              </Typography>
+              <Typography
+                variant="p"
+                sx={{
+                  color: "black",
                   fontSize: "0.9rem",
+                  [theme.breakpoints.down("sm")]: {
+                    fontSize: "0.8rem",
+                  },
+                }}
+              >
+                Flexible savings for emergencies. Free transfers, withdrawals
+                etc. 8% p.a
+              </Typography>
+              <Typography
+                variant="p"
+                sx={{
+                  fontWeight: 600,
+                  color: "#e0218a",
+                  fontSize: "1.1rem",
+                  [theme.breakpoints.down("sm")]: {
+                    fontSize: "0.9rem",
+                  },
+                }}
+              >
+                N0.00
+              </Typography>
+            </Card>
+          </Link>
+          <Link
+            href="/safelock"
+            style={{ flexGrow: 1, flexShrink: 1, flexBasis: "0%" }}
+          >
+            <Card
+              sx={{
+                display: "flex",
+                maxWidth: "250px",
+                maxHeight: "250px",
+                p: "30px 20px",
+                flexDirection: "column",
+                gap: "0.9rem",
+                background: "#9fd7fe",
+                cursor: "pointer",
+                boxShadow: "none",
+                borderBottomRightRadius: "1rem",
+                borderTopLeftRadius: "1rem",
+                borderTopRightRadius: "1rem",
+                borderBottomLeftRadius: "0.5rem",
+                [theme.breakpoints.down("sm")]: {
+                  gap: "0.3rem",
                 },
               }}
             >
-              N0.00
-            </Typography>
-          </Card>
-        </Link>
+              <LockOutlinedIcon
+                style={{ fontSize: "2rem", color: "#0066b2" }}
+              />
+              <Typography
+                variant="h5"
+                sx={{
+                  color: "#0066b2",
+                  fontWeight: 600,
+                  fontSize: "1.2rem",
+                  [theme.breakpoints.down("sm")]: {
+                    fontSize: "1rem",
+                  },
+                }}
+              >
+                Safelock
+              </Typography>
+              <Typography
+                variant="p"
+                sx={{
+                  color: "black",
+                  fontSize: "0.9rem",
+                  [theme.breakpoints.down("sm")]: {
+                    fontSize: "0.8rem",
+                  },
+                }}
+              >
+                Lock funds to avoid spending temptations. Upfront interest. Up
+                to 13% p.a
+              </Typography>
+              <Typography
+                variant="p"
+                sx={{
+                  fontWeight: 600,
+                  color: "#0066b2",
+                  fontSize: "1.1rem",
+                  [theme.breakpoints.down("sm")]: {
+                    fontSize: "0.9rem",
+                  },
+                }}
+              >
+                N0.00
+              </Typography>
+            </Card>
+          </Link>
+        </Box>
       </Box>
-    </Box>
-  );
+    );
+  }
 };
 export default Savings;

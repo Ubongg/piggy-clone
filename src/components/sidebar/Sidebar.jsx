@@ -16,6 +16,7 @@ import SavingsIcon from "@mui/icons-material/Savings";
 import PowerSettingsNewIcon from "@mui/icons-material/PowerSettingsNew";
 import Link from "next/link";
 import { useGlobalContext } from "../context/context";
+import { signOut, useSession } from "next-auth/react";
 
 const drawerWidth = 240;
 
@@ -61,72 +62,113 @@ const Drawer = styled(MuiDrawer, {
 }));
 
 export default function Sidebar() {
+  const session = useSession();
   const theme = useTheme();
   const { open, setOpen } = useGlobalContext();
 
-  return (
-    <Box
-      sx={{
-        [theme.breakpoints.down("md")]: {
-          display: "none",
-        },
-      }}
-    >
-      <CssBaseline />
-      <Drawer variant="permanent" open={open}>
-        <List sx={{ margin: "20px 0" }}>
-          {["YuboVest"].map((text, index) => (
-            <ListItem key={text} disablePadding sx={{ display: "block" }}>
-              <ListItemButton
-                sx={{
-                  minHeight: 48,
-                  justifyContent: open ? "initial" : "center",
-                  px: 2.5,
-                }}
-              >
-                <ListItemIcon
+  // useEffect(() => {
+  //   if (session.status === "unauthenticated") {
+  //     router?.push("/login");
+  //   }
+  // }, [session.status, router]);
+
+  if (session.status === "authenticated") {
+    return (
+      <Box
+        sx={{
+          [theme.breakpoints.down("md")]: {
+            display: "none",
+          },
+        }}
+      >
+        <CssBaseline />
+        <Drawer variant="permanent" open={open}>
+          <List sx={{ margin: "20px 0" }}>
+            {["YuboVest"].map((text, index) => (
+              <ListItem key={text} disablePadding sx={{ display: "block" }}>
+                <ListItemButton
                   sx={{
-                    minWidth: 0,
-                    mr: open ? 3 : "auto",
-                    justifyContent: "center",
-                    color: "white",
+                    minHeight: 48,
+                    justifyContent: open ? "initial" : "center",
+                    px: 2.5,
                   }}
-                  onClick={() => setOpen(!open)}
                 >
-                  <MenuIcon />
-                </ListItemIcon>
-                <ListItemText
-                  primary={text}
-                  sx={{
-                    opacity: open ? 1 : 0,
-                    color: "white",
-                  }}
-                  primaryTypographyProps={{
-                    fontSize: "1.3rem",
-                    fontWeight: 600,
-                  }}
-                />
-              </ListItemButton>
-            </ListItem>
-          ))}
-        </List>
-        <List>
-          {["Home", "Savings"].map((text, index) => (
-            <ListItem
-              key={text}
-              disablePadding
-              sx={{ display: "block", marginBottom: "15px" }}
-            >
-              <ListItemButton
-                sx={{
-                  minHeight: 48,
-                  justifyContent: "initial",
-                  px: 2.5,
-                }}
+                  <ListItemIcon
+                    sx={{
+                      minWidth: 0,
+                      mr: open ? 3 : "auto",
+                      justifyContent: "center",
+                      color: "white",
+                    }}
+                    onClick={() => setOpen(!open)}
+                  >
+                    <MenuIcon />
+                  </ListItemIcon>
+                  <ListItemText
+                    primary={text}
+                    sx={{
+                      opacity: open ? 1 : 0,
+                      color: "white",
+                    }}
+                    primaryTypographyProps={{
+                      fontSize: "1.3rem",
+                      fontWeight: 600,
+                    }}
+                  />
+                </ListItemButton>
+              </ListItem>
+            ))}
+          </List>
+          <List>
+            {["Home", "Savings"].map((text, index) => (
+              <ListItem
+                key={text}
+                disablePadding
+                sx={{ display: "block", marginBottom: "15px" }}
               >
-                <Link
-                  href={text === "Home" ? "/" : "/savings"}
-                  style={{ display: "flex", alignItems: "center" }}
+                <ListItemButton
+                  sx={{
+                    minHeight: 48,
+                    justifyContent: "initial",
+                    px: 2.5,
+                  }}
+                >
+                  <Link
+                    href={text === "Home" ? "/" : "/savings"}
+                    style={{ display: "flex", alignItems: "center" }}
+                  >
+                    <ListItemIcon
+                      sx={{
+                        minWidth: 0,
+                        mr: open ? 3 : "auto",
+                        justifyContent: "center",
+                        color: "white",
+                      }}
+                    >
+                      {text === "Home" ? <HomeIcon /> : <SavingsIcon />}
+                    </ListItemIcon>
+                    <ListItemText
+                      primary={text}
+                      sx={{ opacity: open ? 1 : 0, color: "white" }}
+                      primaryTypographyProps={{
+                        fontWeight: 500,
+                      }}
+                    />
+                  </Link>
+                </ListItemButton>
+              </ListItem>
+            ))}
+          </List>
+          <List sx={{ marginTop: "auto", marginBottom: "20px" }}>
+            {["Logout"].map((text, index) => (
+              <ListItem key={text} disablePadding sx={{ display: "block" }}>
+                <ListItemButton
+                  sx={{
+                    minHeight: 48,
+                    justifyContent: open ? "initial" : "center",
+                    px: 2.5,
+                  }}
+                  onClick={signOut}
                 >
                   <ListItemIcon
                     sx={{
@@ -136,7 +178,7 @@ export default function Sidebar() {
                       color: "white",
                     }}
                   >
-                    {text === "Home" ? <HomeIcon /> : <SavingsIcon />}
+                    <PowerSettingsNewIcon />
                   </ListItemIcon>
                   <ListItemText
                     primary={text}
@@ -145,43 +187,12 @@ export default function Sidebar() {
                       fontWeight: 500,
                     }}
                   />
-                </Link>
-              </ListItemButton>
-            </ListItem>
-          ))}
-        </List>
-        <List sx={{ marginTop: "auto", marginBottom: "20px" }}>
-          {["Logout"].map((text, index) => (
-            <ListItem key={text} disablePadding sx={{ display: "block" }}>
-              <ListItemButton
-                sx={{
-                  minHeight: 48,
-                  justifyContent: open ? "initial" : "center",
-                  px: 2.5,
-                }}
-              >
-                <ListItemIcon
-                  sx={{
-                    minWidth: 0,
-                    mr: open ? 3 : "auto",
-                    justifyContent: "center",
-                    color: "white",
-                  }}
-                >
-                  <PowerSettingsNewIcon />
-                </ListItemIcon>
-                <ListItemText
-                  primary={text}
-                  sx={{ opacity: open ? 1 : 0, color: "white" }}
-                  primaryTypographyProps={{
-                    fontWeight: 500,
-                  }}
-                />
-              </ListItemButton>
-            </ListItem>
-          ))}
-        </List>
-      </Drawer>
-    </Box>
-  );
+                </ListItemButton>
+              </ListItem>
+            ))}
+          </List>
+        </Drawer>
+      </Box>
+    );
+  }
 }

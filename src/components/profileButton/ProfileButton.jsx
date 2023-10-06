@@ -3,6 +3,7 @@ import Button from "@mui/material/Button";
 import Menu from "@mui/material/Menu";
 import MenuItem from "@mui/material/MenuItem";
 import AccountCircleIcon from "@mui/icons-material/AccountCircle";
+import { signOut } from "next-auth/react";
 
 const ProfileButton = () => {
   const [anchorEl, setAnchorEl] = React.useState(null);
@@ -40,7 +41,7 @@ const ProfileButton = () => {
           horizontal: "left",
         }}
       >
-        <MenuItem onClick={handleClose}>Logout</MenuItem>
+        <MenuItem onClick={signOut}>Logout</MenuItem>
       </Menu>
     </div>
   );

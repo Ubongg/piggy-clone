@@ -3,9 +3,39 @@
 import { useGlobalContext } from "@/components/context/context";
 import Link from "next/link";
 const { Box, Typography, Button } = require("@mui/material");
+import { useRouter } from "next/navigation";
+import { useState } from "react";
 
 const Register = () => {
   const { safeColor } = useGlobalContext();
+  const [error, setError] = useState(null);
+
+  const router = useRouter();
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    const name = e.target[0].value;
+    const email = e.target[1].value;
+    const password = e.target[2].value;
+
+    try {
+      const res = await fetch("/api/auth/register", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          name,
+          email,
+          password,
+        }),
+      });
+      res.status === 201 &&
+        router.push("/login?success=Account has been created");
+    } catch (err) {
+      setError(err);
+    }
+  };
 
   return (
     <Box
@@ -16,7 +46,7 @@ const Register = () => {
         flexDirection: "column",
         height: "100vh",
         width: "100%",
-        background: "#27374D",
+        background: "#213555",
         px: "15px",
       }}
     >
@@ -60,6 +90,7 @@ const Register = () => {
             flexDirection: "column",
             width: "100%",
           }}
+          onSubmit={handleSubmit}
         >
           <label
             style={{
@@ -119,7 +150,7 @@ const Register = () => {
             Password
           </label>
           <input
-            type="text"
+            type="password"
             placeholder="Password"
             required
             style={{
@@ -133,22 +164,26 @@ const Register = () => {
               borderRadius: "0.5rem",
             }}
           />
-          <Button
-            variant="contained"
-            sx={{
-              py: "12px",
+          <button
+            style={{
+              padding: "12px 0",
               fontWeight: 600,
-              fontSize: "1rem",
-              mt: "20px",
+              fontSize: "0.9rem",
+              marginTop: "20px",
               borderBottomRightRadius: "0.5rem",
               borderTopLeftRadius: "0.5rem",
               borderTopRightRadius: "0.5rem",
               borderBottomLeftRadius: 0,
               background: safeColor,
+              border: "none",
+              color: "#fff",
+              textTransform: "uppercase",
+              height: "50px",
+              cursor: "pointer",
             }}
           >
             create account
-          </Button>
+          </button>
         </form>
       </Box>
       <Link

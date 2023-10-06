@@ -6,6 +6,7 @@ import { theme } from "@/components/theme/theme";
 import Sidebar from "@/components/sidebar/Sidebar";
 import { AppProvider } from "@/components/context/context";
 import BottomNav from "@/components/bottomNav/BottomNav";
+import AuthProvider from "@/components/AuthProvider/AuthProvider";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -18,15 +19,17 @@ export default function RootLayout({ children }) {
   return (
     <html lang="en">
       <body className={inter.className}>
-        <ThemeProvider theme={theme}>
-          <AppProvider>
-            <Box sx={{ display: "flex" }}>
-              <Sidebar />
-              {children}
-              <BottomNav />
-            </Box>
-          </AppProvider>
-        </ThemeProvider>
+        <AuthProvider>
+          <ThemeProvider theme={theme}>
+            <AppProvider>
+              <Box sx={{ display: "flex" }}>
+                <Sidebar />
+                {children}
+                <BottomNav />
+              </Box>
+            </AppProvider>
+          </ThemeProvider>
+        </AuthProvider>
       </body>
     </html>
   );
