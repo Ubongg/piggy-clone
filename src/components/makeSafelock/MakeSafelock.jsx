@@ -9,7 +9,7 @@ import "@/app/globals.css";
 
 const MakeSafelock = ({ toggleCreateSafelockDrawer, anchor }) => {
   const theme = useTheme();
-  const { safeColor, greyBorder } = useGlobalContext();
+  const { safeColor } = useGlobalContext();
   const falseDate = (date) => new Date() < date;
   const [payBackDate, setPayBackDate] = useState(new Date());
 
@@ -127,8 +127,6 @@ const MakeSafelock = ({ toggleCreateSafelockDrawer, anchor }) => {
           </label>
           <DatePicker
             filterDate={falseDate}
-            minTime={new Date(0, 0, 0, 9, 0)}
-            maxTime={new Date(0, 0, 0, 19, 0)}
             selected={payBackDate}
             onChange={(payBackDate) => setPayBackDate(payBackDate)}
             required
