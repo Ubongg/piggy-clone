@@ -11,6 +11,7 @@ import { useGlobalContext } from "@/components/context/context";
 import MakeSafelock from "@/components/makeSafelock/MakeSafelock";
 import { useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
+import useSWR from "swr";
 
 const Safelock = () => {
   const session = useSession();
@@ -25,11 +26,20 @@ const Safelock = () => {
   } = useGlobalContext();
 
   const [ongoing, setOngoing] = useState(true);
+  const [completed, setCompleted] = useState(false);
   const [value, setValue] = useState("1");
 
   const handleChange = (event, newValue) => {
     setValue(newValue);
   };
+
+  // fetch data
+  const fetcher = (...args) => fetch(...args).then((res) => res.json());
+
+  const { data, mutate, error, isLoading } = useSWR(
+    `/api/safelocks?email=${session?.data?.user.email}`,
+    fetcher
+  );
 
   useEffect(() => {
     if (session.status === "unauthenticated") {
@@ -244,7 +254,10 @@ const Safelock = () => {
                         borderTopLeftRadius: "0.5rem",
                         borderTopRightRadius: "0.5rem",
                       }}
-                      onClick={() => setOngoing(true)}
+                      onClick={() => {
+                        setOngoing(true);
+                        setCompleted(false);
+                      }}
                     >
                       Ongoing
                     </Typography>
@@ -261,7 +274,10 @@ const Safelock = () => {
                         borderTopLeftRadius: "0.5rem",
                         borderTopRightRadius: "0.5rem",
                       }}
-                      onClick={() => setOngoing(false)}
+                      onClick={() => {
+                        setOngoing(false);
+                        setCompleted(true);
+                      }}
                     >
                       Completed
                     </Typography>
@@ -279,7 +295,45 @@ const Safelock = () => {
                     textAlign: "center",
                   }}
                 >
-                  <Typography
+                  {ongoing &&
+                    data?.map((safelock) => {
+                      if (safelock.status === "ongoing") {
+                        return (
+                          <Box key={safelock._id}>
+                            <Typography variant="p">
+                              {safelock.amount}
+                            </Typography>
+                          </Box>
+                        );
+                      } else {
+                        return (
+                          <Typography variant="p">
+                            You have no SafeLock setup. Let's help you get
+                            started.
+                          </Typography>
+                        );
+                      }
+                    })}
+
+                  {completed &&
+                    data?.map((safelock) => {
+                      if (safelock.status === "completed") {
+                        return (
+                          <Box key={safelock._id}>
+                            <Typography variant="p">
+                              {safelock.amount}
+                            </Typography>
+                          </Box>
+                        );
+                      } else {
+                        return (
+                          <Typography variant="p">
+                            You have no completed safelocks just yet.
+                          </Typography>
+                        );
+                      }
+                    })}
+                  {/* <Typography
                     variant="h4"
                     color={safeColor}
                     sx={{
@@ -396,7 +450,7 @@ const Safelock = () => {
                         />
                       </Drawer>
                     </React.Fragment>
-                  ))}
+                  ))} */}
                 </Box>
               </Box>
             </TabPanel>
