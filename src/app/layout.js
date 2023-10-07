@@ -7,6 +7,8 @@ import Sidebar from "@/components/sidebar/Sidebar";
 import { AppProvider } from "@/components/context/context";
 import BottomNav from "@/components/bottomNav/BottomNav";
 import AuthProvider from "@/components/AuthProvider/AuthProvider";
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -30,6 +32,7 @@ export default function RootLayout({ children }) {
             </AppProvider>
           </ThemeProvider>
         </AuthProvider>
+        <ToastContainer />
       </body>
     </html>
   );
