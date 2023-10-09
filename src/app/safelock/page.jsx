@@ -1,6 +1,14 @@
 "use client";
 
-import { Box, Tab, Button, Card, Drawer, Typography } from "@mui/material";
+import {
+  Box,
+  Tab,
+  Button,
+  Card,
+  Drawer,
+  Typography,
+  Paper,
+} from "@mui/material";
 import Link from "next/link";
 import { useTheme } from "@mui/material/styles";
 import ProfileButton from "@/components/profileButton/ProfileButton";
@@ -11,7 +19,8 @@ import { useGlobalContext } from "@/components/context/context";
 import MakeSafelock from "@/components/makeSafelock/MakeSafelock";
 import { useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
-import useSWR from "swr";
+import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
+import CountDown from "@/components/countDown/CountDown";
 
 const Safelock = () => {
   const session = useSession();
@@ -23,6 +32,7 @@ const Safelock = () => {
     toggleAboutSafelockDrawer,
     toggleCreateSafelockDrawer,
     safeColor,
+    data,
   } = useGlobalContext();
 
   const [ongoing, setOngoing] = useState(true);
@@ -32,14 +42,6 @@ const Safelock = () => {
   const handleChange = (event, newValue) => {
     setValue(newValue);
   };
-
-  // fetch data
-  const fetcher = (...args) => fetch(...args).then((res) => res.json());
-
-  const { data, mutate, error, isLoading } = useSWR(
-    `/api/safelocks?email=${session?.data?.user.email}`,
-    fetcher
-  );
 
   useEffect(() => {
     if (session.status === "unauthenticated") {
@@ -286,31 +288,66 @@ const Safelock = () => {
                 <Box
                   sx={{
                     borderTop: "1px solid rgb(224, 222, 222)",
+                    mx: "30px",
+                    py: "20px",
                     display: "flex",
                     justifyContent: "center",
                     alignItems: "center",
                     flexDirection: "column",
-                    mx: "50px",
-                    py: "20px",
-                    textAlign: "center",
+                    gap: "1.5rem",
                   }}
                 >
                   {ongoing &&
                     data?.map((safelock) => {
                       if (safelock.status === "ongoing") {
                         return (
-                          <Box key={safelock._id}>
-                            <Typography variant="p">
-                              {safelock.amount}
-                            </Typography>
+                          <Box
+                            key={safelock._id}
+                            sx={{
+                              display: "flex",
+                              alignItems: "center",
+                              gap: "1rem",
+                              position: "relative",
+                              width: "100%",
+                            }}
+                          >
+                            <Paper
+                              elevation={2}
+                              sx={{
+                                p: "15px 25px 10px",
+                                background: "#9fd7fe",
+                                color: safeColor,
+                              }}
+                            >
+                              <LockOutlinedIcon
+                                style={{ fontSize: "1.8rem" }}
+                              />
+                            </Paper>
+                            <Box>
+                              <Typography
+                                variant="h6"
+                                sx={{
+                                  textTransform: "capitalize",
+                                  fontSize: "0.9rem",
+                                }}
+                              >
+                                {safelock.title}
+                              </Typography>
+                              <Typography
+                                variant="h6"
+                                sx={{
+                                  fontSize: "1.1rem",
+                                  fontWeight: 600,
+                                }}
+                              >
+                                N{safelock.amount}
+                              </Typography>
+                            </Box>
+                            <CountDown
+                              targetDate={safelock.paybackDate}
+                              id={safelock._id}
+                            />
                           </Box>
-                        );
-                      } else {
-                        return (
-                          <Typography variant="p">
-                            You have no SafeLock setup. Let's help you get
-                            started.
-                          </Typography>
                         );
                       }
                     })}
@@ -324,12 +361,6 @@ const Safelock = () => {
                               {safelock.amount}
                             </Typography>
                           </Box>
-                        );
-                      } else {
-                        return (
-                          <Typography variant="p">
-                            You have no completed safelocks just yet.
-                          </Typography>
                         );
                       }
                     })}

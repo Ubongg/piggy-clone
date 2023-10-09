@@ -6,15 +6,38 @@ import React, { useState } from "react";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import "@/app/globals.css";
+import { toast } from "react-toastify";
+import { useSession } from "next-auth/react";
 
 const MakeSafelock = ({ toggleCreateSafelockDrawer, anchor }) => {
+  const session = useSession();
   const theme = useTheme();
-  const { safeColor } = useGlobalContext();
+  const { safeColor, mutate } = useGlobalContext();
   const falseDate = (date) => new Date() < date;
   const [payBackDate, setPayBackDate] = useState(new Date());
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
+    const amount = e.target[0].value;
+    const title = e.target[1].value;
+
+    try {
+      await fetch("/api/safelocks", {
+        method: "POST",
+        body: JSON.stringify({
+          amount,
+          title,
+          paybackDate: payBackDate,
+          status: "ongoing",
+          email: session.data.user.email,
+        }),
+      });
+      mutate();
+      e.target.reset();
+      toast.success("Safelock Created");
+    } catch (error) {
+      toast.error("Safelock Not Created");
+    }
   };
 
   return (
@@ -132,21 +155,26 @@ const MakeSafelock = ({ toggleCreateSafelockDrawer, anchor }) => {
             required
             className="datePickerStyle"
           />
-          <Button
-            variant="contained"
-            sx={{
-              py: "12px",
+          <button
+            style={{
+              padding: "12px 0",
               fontWeight: 600,
-              fontSize: "1rem",
-              mt: "20px",
+              fontSize: "0.9rem",
+              marginTop: "20px",
               borderBottomRightRadius: "0.5rem",
               borderTopLeftRadius: "0.5rem",
               borderTopRightRadius: "0.5rem",
               borderBottomLeftRadius: 0,
+              background: safeColor,
+              border: "none",
+              color: "#fff",
+              textTransform: "uppercase",
+              height: "50px",
+              cursor: "pointer",
             }}
           >
             submit
-          </Button>
+          </button>
         </form>
       </Box>
     </Box>
