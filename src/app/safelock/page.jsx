@@ -21,7 +21,6 @@ import { useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
 import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 import CountDown from "@/components/countDown/CountDown";
-import SafelockBalance from "@/components/safelockBalance/safelockBalance";
 import SafeBalance from "@/components/safeBalance/SafeBalance";
 
 const Safelock = () => {
@@ -153,6 +152,16 @@ const Safelock = () => {
                       );
                     }
                   })}
+                  {balancesData?.length === 0 && (
+                    <Typography
+                      variant="h4"
+                      fontSize="2.4rem"
+                      color={safeColor}
+                      fontWeight={600}
+                    >
+                      N0.00
+                    </Typography>
+                  )}
                 </Box>
                 <Box
                   sx={{
@@ -357,6 +366,12 @@ const Safelock = () => {
                       }
                     })}
 
+                  {ongoing && safelocksData?.length === 0 && (
+                    <Typography variant="p" fontSize="0.9rem">
+                      You have no SafeLock setup. Let's help you get started.
+                    </Typography>
+                  )}
+
                   {completed &&
                     safelocksData?.map((safelock) => {
                       if (safelock.status === "completed") {
@@ -419,6 +434,12 @@ const Safelock = () => {
                         );
                       }
                     })}
+                  {completed && safelocksData?.length === 0 && (
+                    <Typography variant="p" fontSize="0.9rem">
+                      You have no completed safelocks just yet. Let's get you
+                      started
+                    </Typography>
+                  )}
                 </Box>
               </Box>
             </TabPanel>

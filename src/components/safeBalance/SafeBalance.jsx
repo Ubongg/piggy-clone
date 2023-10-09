@@ -1,8 +1,10 @@
 import { Box, Typography } from "@mui/material";
 import { useEffect } from "react";
 import { useGlobalContext } from "../context/context";
+import { useSession } from "next-auth/react";
 
 const SafeBalance = ({ balance }) => {
+  const session = useSession();
   const { safeColor, safelocksData, balancesData, mutateBalances } =
     useGlobalContext();
 

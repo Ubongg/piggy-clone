@@ -5,9 +5,12 @@ import Link from "next/link";
 const { Box, Typography, Button } = require("@mui/material");
 import { useRouter } from "next/navigation";
 import { useState } from "react";
+import { useSession } from "next-auth/react";
+import { toast } from "react-toastify";
 
 const Register = () => {
-  const { safeColor } = useGlobalContext();
+  const session = useSession();
+  const { safeColor, mutateBalances } = useGlobalContext();
   const [error, setError] = useState(null);
 
   const router = useRouter();
@@ -30,8 +33,24 @@ const Register = () => {
           password,
         }),
       });
-      res.status === 201 &&
+      if (res.status === 201) {
         router.push("/login?success=Account has been created");
+
+        try {
+          await fetch("/api/balances", {
+            method: "POST",
+            body: JSON.stringify({
+              accountName: "safelock",
+              accountBalance: 0,
+              email,
+            }),
+          });
+          mutateBalances();
+          toast.success("Balance Set");
+        } catch (error) {
+          toast.error("Balance Not Set");
+        }
+      }
     } catch (err) {
       setError(err);
     }

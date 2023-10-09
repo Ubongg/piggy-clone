@@ -25,7 +25,7 @@ const Flex = () => {
     toggleTopUpDrawer,
     toggleWithdrawDrawer,
     flexColor,
-    greyBorder,
+    balancesData,
   } = useGlobalContext();
 
   const [all, setAll] = useState(true);
@@ -138,14 +138,32 @@ const Flex = () => {
                   <Typography variant="h6" fontSize="0.7rem">
                     FLEX ACCOUNT
                   </Typography>
-                  <Typography
-                    variant="h4"
-                    fontSize="2.4rem"
-                    color={flexColor}
-                    fontWeight={600}
-                  >
-                    N0.00
-                  </Typography>
+                  {balancesData?.map((balance) => {
+                    if (balance.accountName === "flex") {
+                      return (
+                        <Box key={balance._id}>
+                          <Typography
+                            variant="h4"
+                            fontSize="2.4rem"
+                            color={flexColor}
+                            fontWeight={600}
+                          >
+                            N{balance.accountBalance}
+                          </Typography>
+                        </Box>
+                      );
+                    }
+                  })}
+                  {balancesData?.length === 0 && (
+                    <Typography
+                      variant="h4"
+                      fontSize="2.4rem"
+                      color={flexColor}
+                      fontWeight={600}
+                    >
+                      N0.00
+                    </Typography>
+                  )}
                 </Box>
                 <Box
                   sx={{
