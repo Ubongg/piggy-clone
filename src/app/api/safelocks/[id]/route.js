@@ -7,7 +7,7 @@ export const PUT = async (request, { params }) => {
   const { status } = await request.json();
 
   await connect();
-  await Order.findByIdAndUpdate(id, { status });
+  await Safelock.findByIdAndUpdate(id, { status });
 
   return NextResponse.json({ message: "Safelock updated" }, { status: 200 });
 };

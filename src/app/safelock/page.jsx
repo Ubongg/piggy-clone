@@ -356,132 +356,56 @@ const Safelock = () => {
                     data?.map((safelock) => {
                       if (safelock.status === "completed") {
                         return (
-                          <Box key={safelock._id}>
-                            <Typography variant="p">
-                              {safelock.amount}
-                            </Typography>
+                          <Box
+                            key={safelock._id}
+                            sx={{
+                              display: "flex",
+                              alignItems: "center",
+                              gap: "1rem",
+                              position: "relative",
+                              width: "100%",
+                            }}
+                          >
+                            <Paper
+                              elevation={2}
+                              sx={{
+                                p: "15px 25px 10px",
+                                background: "#9fd7fe",
+                                color: safeColor,
+                              }}
+                            >
+                              <LockOutlinedIcon
+                                style={{ fontSize: "1.8rem" }}
+                              />
+                            </Paper>
+                            <Box>
+                              <Typography
+                                variant="h6"
+                                sx={{
+                                  textTransform: "capitalize",
+                                  fontSize: "0.9rem",
+                                }}
+                              >
+                                {safelock.title}
+                              </Typography>
+                              <Typography
+                                variant="h6"
+                                sx={{
+                                  fontSize: "1.1rem",
+                                  fontWeight: 600,
+                                }}
+                              >
+                                N{safelock.amount}
+                              </Typography>
+                            </Box>
+                            <CountDown
+                              targetDate={safelock.paybackDate}
+                              id={safelock._id}
+                            />
                           </Box>
                         );
                       }
                     })}
-                  {/* <Typography
-                    variant="h4"
-                    color={safeColor}
-                    sx={{
-                      fontSize: "1.5rem",
-                      fontWeight: 600,
-                      [theme.breakpoints.down("sm")]: {
-                        fontSize: "1.3rem",
-                      },
-                    }}
-                  >
-                    Create a Safelock
-                  </Typography>
-                  {ongoing ? (
-                    <Typography
-                      variant="p"
-                      sx={{
-                        fontSize: "1rem",
-                        my: "5px",
-                        [theme.breakpoints.down("sm")]: {
-                          fontSize: "0.9rem",
-                        },
-                      }}
-                    >
-                      You have no SafeLock setup. Let's help you get started.
-                    </Typography>
-                  ) : (
-                    <Typography
-                      variant="p"
-                      sx={{
-                        fontSize: "1rem",
-                        my: "5px",
-                        [theme.breakpoints.down("sm")]: {
-                          fontSize: "0.9rem",
-                        },
-                      }}
-                    >
-                      You have no completed safelocks just yet. Let's get you
-                      started
-                    </Typography>
-                  )}
-                  {["right"].map((anchor) => (
-                    <React.Fragment key={anchor}>
-                      <Typography
-                        variant="p"
-                        color="white"
-                        backgroundColor={safeColor}
-                        sx={{
-                          fontSize: "0.9rem",
-                          fontWeight: 600,
-                          border: "1px solid rgb(224, 222, 222)",
-                          py: "8px",
-                          width: "230px",
-                          cursor: "pointer",
-                          borderBottomRightRadius: "0.5rem",
-                          borderTopLeftRadius: "0.5rem",
-                          borderTopRightRadius: "0.5rem",
-                          mt: "10px",
-                          [theme.breakpoints.down("sm")]: {
-                            fontSize: "0.7rem",
-                            width: "170px",
-                          },
-                        }}
-                        onClick={toggleCreateSafelockDrawer(anchor, true)}
-                      >
-                        CREATE A SAFELOCK
-                      </Typography>
-                      <Drawer
-                        anchor={anchor}
-                        open={createSafelock[anchor]}
-                        onClose={toggleCreateSafelockDrawer(anchor, false)}
-                      >
-                        <MakeSafelock
-                          toggleCreateSafelockDrawer={
-                            toggleCreateSafelockDrawer
-                          }
-                          anchor={anchor}
-                        />
-                      </Drawer>
-                    </React.Fragment>
-                  ))}
-                  {["right"].map((anchor) => (
-                    <React.Fragment key={anchor}>
-                      <Typography
-                        variant="p"
-                        color={safeColor}
-                        sx={{
-                          fontSize: "0.9rem",
-                          fontWeight: 600,
-                          border: `1px solid ${safeColor}`,
-                          py: "8px",
-                          width: "250px",
-                          cursor: "pointer",
-                          borderBottomRightRadius: "0.5rem",
-                          borderTopLeftRadius: "0.5rem",
-                          borderTopRightRadius: "0.5rem",
-                          my: "5px",
-                          [theme.breakpoints.down("sm")]: {
-                            fontSize: "0.7rem",
-                            width: "190px",
-                          },
-                        }}
-                        onClick={toggleAboutSafelockDrawer(anchor, true)}
-                      >
-                        WHAT IS SAFELOCK?
-                      </Typography>
-                      <Drawer
-                        anchor={anchor}
-                        open={aboutSafelock[anchor]}
-                        onClose={toggleAboutSafelockDrawer(anchor, false)}
-                      >
-                        <AboutSafelock
-                          toggleAboutSafelockDrawer={toggleAboutSafelockDrawer}
-                          anchor={anchor}
-                        />
-                      </Drawer>
-                    </React.Fragment>
-                  ))} */}
                 </Box>
               </Box>
             </TabPanel>
