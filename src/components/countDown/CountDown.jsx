@@ -3,18 +3,18 @@ import React, { useState, useEffect } from "react";
 import { useGlobalContext } from "../context/context";
 
 const CountDown = ({ targetDate, id }) => {
-  const { safeColor, data, mutate } = useGlobalContext();
+  const { safeColor, safelocksData, mutateSafelocks } = useGlobalContext();
   const [daysLeft, setDaysLeft] = useState(0);
 
   const changeStatus = async (id) => {
     await fetch(`/api/safelocks/${id}`, {
       method: "PUT",
       body: JSON.stringify({
-        ...data,
+        ...safelocksData,
         status: "completed",
       }),
     });
-    mutate();
+    mutateSafelocks();
   };
 
   useEffect(() => {

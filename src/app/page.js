@@ -21,7 +21,7 @@ const Home = () => {
   const session = useSession();
   const router = useRouter();
   const theme = useTheme();
-  const { activities, toggleActivitiesDrawer } = useGlobalContext();
+  const { activities, toggleActivitiesDrawer, data } = useGlobalContext();
 
   useEffect(() => {
     if (session.status === "unauthenticated") {
@@ -50,7 +50,7 @@ const Home = () => {
         >
           <Box>
             <Typography variant="h5" fontWeight={600} fontSize="1.8rem">
-              Ubong,
+              {session?.data?.user.name},
             </Typography>
             <Typography variant="p">Save some money today!</Typography>
           </Box>

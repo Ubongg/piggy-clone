@@ -11,7 +11,7 @@ const AppProvider = ({ children }) => {
   const safeColor = "#0066b2";
   const greyBorder = "rgb(224, 222, 222)";
   const flexColor = "#e0218a";
-  const [thedaysLeft, setTheDaysLeft] = useState(0);
+
   const [open, setOpen] = React.useState(false);
   const [activities, setActivities] = React.useState({
     right: false,
@@ -87,10 +87,19 @@ const AppProvider = ({ children }) => {
   // fetch data
   const fetcher = (...args) => fetch(...args).then((res) => res.json());
 
-  const { data, mutate, error, isLoading } = useSWR(
-    `/api/safelocks?email=${session?.data?.user.email}`,
-    fetcher
-  );
+  const {
+    data: safelocksData,
+    mutate: mutateSafelocks,
+    error: safelocksError,
+    isLoading: safelocksIsLoading,
+  } = useSWR(`/api/safelocks?email=${session?.data?.user.email}`, fetcher);
+
+  const {
+    data: balancesData,
+    mutate: mutateBalances,
+    error: balancesError,
+    isLoading: balancesIsLoading,
+  } = useSWR(`/api/balances?email=${session?.data?.user.email}`, fetcher);
 
   return (
     <AppContext.Provider
@@ -110,10 +119,10 @@ const AppProvider = ({ children }) => {
         toggleCreateSafelockDrawer,
         greyBorder,
         flexColor,
-        thedaysLeft,
-        setTheDaysLeft,
-        data,
-        mutate,
+        safelocksData,
+        mutateSafelocks,
+        balancesData,
+        mutateBalances,
       }}
     >
       {children}

@@ -12,7 +12,7 @@ import { useSession } from "next-auth/react";
 const MakeSafelock = ({ toggleCreateSafelockDrawer, anchor }) => {
   const session = useSession();
   const theme = useTheme();
-  const { safeColor, mutate } = useGlobalContext();
+  const { safeColor, mutateSafelocks } = useGlobalContext();
   const falseDate = (date) => new Date() < date;
   const [payBackDate, setPayBackDate] = useState(new Date());
 
@@ -32,7 +32,7 @@ const MakeSafelock = ({ toggleCreateSafelockDrawer, anchor }) => {
           email: session.data.user.email,
         }),
       });
-      mutate();
+      mutateSafelocks();
       e.target.reset();
       toast.success("Safelock Created");
     } catch (error) {

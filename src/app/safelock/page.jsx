@@ -21,6 +21,8 @@ import { useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
 import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 import CountDown from "@/components/countDown/CountDown";
+import SafelockBalance from "@/components/safelockBalance/safelockBalance";
+import SafeBalance from "@/components/safeBalance/SafeBalance";
 
 const Safelock = () => {
   const session = useSession();
@@ -32,7 +34,9 @@ const Safelock = () => {
     toggleAboutSafelockDrawer,
     toggleCreateSafelockDrawer,
     safeColor,
-    data,
+    safelocksData,
+    balancesData,
+    mutateBalances,
   } = useGlobalContext();
 
   const [ongoing, setOngoing] = useState(true);
@@ -140,14 +144,15 @@ const Safelock = () => {
                   <Typography variant="h6" fontSize="0.7rem">
                     SAFELOCK BALANCE
                   </Typography>
-                  <Typography
-                    variant="h4"
-                    fontSize="2.4rem"
-                    color={safeColor}
-                    fontWeight={600}
-                  >
-                    N0.00
-                  </Typography>
+                  {balancesData?.map((balance) => {
+                    if (balance.accountName === "safelock") {
+                      return (
+                        <Box key={balance._id}>
+                          <SafeBalance balance={balance} />
+                        </Box>
+                      );
+                    }
+                  })}
                 </Box>
                 <Box
                   sx={{
@@ -298,7 +303,7 @@ const Safelock = () => {
                   }}
                 >
                   {ongoing &&
-                    data?.map((safelock) => {
+                    safelocksData?.map((safelock) => {
                       if (safelock.status === "ongoing") {
                         return (
                           <Box
@@ -353,7 +358,7 @@ const Safelock = () => {
                     })}
 
                   {completed &&
-                    data?.map((safelock) => {
+                    safelocksData?.map((safelock) => {
                       if (safelock.status === "completed") {
                         return (
                           <Box
@@ -398,10 +403,18 @@ const Safelock = () => {
                                 N{safelock.amount}
                               </Typography>
                             </Box>
-                            <CountDown
-                              targetDate={safelock.paybackDate}
-                              id={safelock._id}
-                            />
+                            <Typography
+                              variant="p"
+                              sx={{
+                                fontSize: "0.9rem",
+                                position: "absolute",
+                                right: 0,
+                                bottom: "0.5rem",
+                                color: safeColor,
+                              }}
+                            >
+                              paid
+                            </Typography>
                           </Box>
                         );
                       }
