@@ -8,9 +8,12 @@ const SafeBalance = ({ balance }) => {
   const { safeColor, safelocksData, balancesData, mutateBalances } =
     useGlobalContext();
 
-  const getSafelockBalance = async (id) => {
-    const safelockBalance = safelocksData.reduce((sum, safelock) => {
-      return safelock.status === "ongoing" && sum + safelock.amount;
+  const updateSafelockBalance = async (id) => {
+    const safelockBalance = safelocksData?.reduce((sum, safelock) => {
+      if (safelock.status === "ongoing") {
+        return sum + safelock.amount;
+      }
+      return sum;
     }, 0);
 
     await fetch(`/api/balances/${id}`, {
@@ -24,7 +27,7 @@ const SafeBalance = ({ balance }) => {
   };
 
   useEffect(() => {
-    getSafelockBalance(balance._id);
+    updateSafelockBalance(balance._id);
   }, [safelocksData]);
 
   return (

@@ -360,6 +360,7 @@ const Safelock = () => {
                             <CountDown
                               targetDate={safelock.paybackDate}
                               id={safelock._id}
+                              amount={safelock.amount}
                             />
                           </Box>
                         );

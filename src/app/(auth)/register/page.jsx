@@ -46,9 +46,24 @@ const Register = () => {
             }),
           });
           mutateBalances();
-          toast.success("Balance Set");
+          toast.success("safelock Set");
         } catch (error) {
-          toast.error("Balance Not Set");
+          toast.error("safelock Not Set");
+        }
+
+        try {
+          await fetch("/api/balances", {
+            method: "POST",
+            body: JSON.stringify({
+              accountName: "flex",
+              accountBalance: 0,
+              email,
+            }),
+          });
+          mutateBalances();
+          toast.success("flex Set");
+        } catch (error) {
+          toast.error("flex Not Set");
         }
       }
     } catch (err) {
