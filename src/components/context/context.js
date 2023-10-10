@@ -101,6 +101,11 @@ const AppProvider = ({ children }) => {
     isLoading: balancesIsLoading,
   } = useSWR(`/api/balances?email=${session?.data?.user.email}`, fetcher);
 
+  const totalSavings = balancesData?.reduce(
+    (sum, balance) => sum + balance.accountBalance,
+    0
+  );
+
   return (
     <AppContext.Provider
       value={{
@@ -123,6 +128,7 @@ const AppProvider = ({ children }) => {
         mutateSafelocks,
         balancesData,
         mutateBalances,
+        totalSavings,
       }}
     >
       {children}

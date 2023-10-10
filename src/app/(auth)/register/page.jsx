@@ -46,9 +46,8 @@ const Register = () => {
             }),
           });
           mutateBalances();
-          toast.success("safelock Set");
         } catch (error) {
-          toast.error("safelock Not Set");
+          console.log("safelock Not Set");
         }
 
         try {
@@ -61,9 +60,8 @@ const Register = () => {
             }),
           });
           mutateBalances();
-          toast.success("flex Set");
         } catch (error) {
-          toast.error("flex Not Set");
+          console.log("flex Not Set");
         }
       }
     } catch (err) {

@@ -2,7 +2,7 @@
 
 import * as React from "react";
 import { Box, Button, Card, Drawer, Typography } from "@mui/material";
-import AccountCircleIcon from "@mui/icons-material/AccountCircle";
+
 import ShieldOutlinedIcon from "@mui/icons-material/ShieldOutlined";
 import AccountBalanceOutlinedIcon from "@mui/icons-material/AccountBalanceOutlined";
 import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
@@ -13,7 +13,7 @@ import Activities from "@/components/activities/Activities";
 import { useTheme } from "@mui/material/styles";
 import ProfileButton from "@/components/profileButton/ProfileButton";
 import { useGlobalContext } from "@/components/context/context";
-import { signOut, useSession } from "next-auth/react";
+import { useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
 import { useEffect } from "react";
 
@@ -21,7 +21,8 @@ const Home = () => {
   const session = useSession();
   const router = useRouter();
   const theme = useTheme();
-  const { activities, toggleActivitiesDrawer, data } = useGlobalContext();
+  const { activities, toggleActivitiesDrawer, balancesData, totalSavings } =
+    useGlobalContext();
 
   useEffect(() => {
     if (session.status === "unauthenticated") {
@@ -90,7 +91,7 @@ const Home = () => {
               <Box>
                 <Typography variant="p">Total Savings</Typography>
                 <Typography variant="h5" sx={{ fontWeight: 600 }}>
-                  N0.00
+                  N{totalSavings}
                 </Typography>
               </Box>
             </Card>
@@ -119,9 +120,17 @@ const Home = () => {
               <AccountBalanceOutlinedIcon style={{ fontSize: "2rem" }} />
               <Box>
                 <Typography variant="p">Flex Account</Typography>
-                <Typography variant="h5" sx={{ fontWeight: 600 }}>
-                  N0.00
-                </Typography>
+                {balancesData?.map((balance) => {
+                  if (balance.accountName === "flex") {
+                    return (
+                      <Box key={balance._id}>
+                        <Typography variant="h5" sx={{ fontWeight: 600 }}>
+                          N{balance.accountBalance}
+                        </Typography>
+                      </Box>
+                    );
+                  }
+                })}
               </Box>
             </Card>
           </Link>
@@ -149,9 +158,17 @@ const Home = () => {
               <LockOutlinedIcon style={{ fontSize: "2rem" }} />
               <Box>
                 <Typography variant="p">Safelock</Typography>
-                <Typography variant="h5" sx={{ fontWeight: 600 }}>
-                  N0.00
-                </Typography>
+                {balancesData?.map((balance) => {
+                  if (balance.accountName === "safelock") {
+                    return (
+                      <Box key={balance._id}>
+                        <Typography variant="h5" sx={{ fontWeight: 600 }}>
+                          N{balance.accountBalance}
+                        </Typography>
+                      </Box>
+                    );
+                  }
+                })}
               </Box>
             </Card>
           </Link>

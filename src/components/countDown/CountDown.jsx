@@ -2,7 +2,6 @@ import { Box, Typography } from "@mui/material";
 import React, { useState, useEffect } from "react";
 import { useGlobalContext } from "../context/context";
 import { useSession } from "next-auth/react";
-import { toast } from "react-toastify";
 
 const CountDown = ({ targetDate, id, amount }) => {
   const session = useSession();
@@ -52,7 +51,7 @@ const CountDown = ({ targetDate, id, amount }) => {
   };
 
   useEffect(() => {
-    const intervalId = setInterval(async () => {
+    const intervalId = setInterval(() => {
       const currentDate = new Date();
       const paybackDate = new Date(targetDate);
       const timeDifference = paybackDate - currentDate;
@@ -60,16 +59,9 @@ const CountDown = ({ targetDate, id, amount }) => {
       if (timeDifference <= 0) {
         clearInterval(intervalId);
         setDaysLeft(0);
-        try {
-          // Change the status first
-          await changeStatus(id);
 
-          // Then update the flex balance
-          await updateFlexBalance(id, amount);
-        } catch (error) {
-          // Handle errors here
-          toast.error("Error changing status or updating flex balance");
-        }
+        changeStatus(id);
+        updateFlexBalance(id, amount);
       } else {
         const daysRemaining = Math.ceil(timeDifference / (1000 * 60 * 60 * 24));
         setDaysLeft(daysRemaining);

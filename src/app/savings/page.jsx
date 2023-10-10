@@ -16,7 +16,7 @@ const Savings = () => {
   const session = useSession();
   const router = useRouter();
   const theme = useTheme();
-  const { open } = useGlobalContext();
+  const { open, totalSavings, balancesData } = useGlobalContext();
 
   useEffect(() => {
     if (session.status === "unauthenticated") {
@@ -75,7 +75,7 @@ const Savings = () => {
             color="#27374D"
             fontWeight={600}
           >
-            N0.00
+            N{totalSavings}
           </Typography>
         </Box>
         <Box
@@ -144,19 +144,27 @@ const Savings = () => {
                 Flexible savings for emergencies. Free transfers, withdrawals
                 etc. 8% p.a
               </Typography>
-              <Typography
-                variant="p"
-                sx={{
-                  fontWeight: 600,
-                  color: "#e0218a",
-                  fontSize: "1.1rem",
-                  [theme.breakpoints.down("sm")]: {
-                    fontSize: "0.9rem",
-                  },
-                }}
-              >
-                N0.00
-              </Typography>
+              {balancesData?.map((balance) => {
+                if (balance.accountName === "flex") {
+                  return (
+                    <Box key={balance._id}>
+                      <Typography
+                        variant="p"
+                        sx={{
+                          fontWeight: 600,
+                          color: "#e0218a",
+                          fontSize: "1.1rem",
+                          [theme.breakpoints.down("sm")]: {
+                            fontSize: "0.9rem",
+                          },
+                        }}
+                      >
+                        N{balance.accountBalance}
+                      </Typography>
+                    </Box>
+                  );
+                }
+              })}
             </Card>
           </Link>
           <Link
@@ -212,19 +220,27 @@ const Savings = () => {
                 Lock funds to avoid spending temptations. Upfront interest. Up
                 to 13% p.a
               </Typography>
-              <Typography
-                variant="p"
-                sx={{
-                  fontWeight: 600,
-                  color: "#0066b2",
-                  fontSize: "1.1rem",
-                  [theme.breakpoints.down("sm")]: {
-                    fontSize: "0.9rem",
-                  },
-                }}
-              >
-                N0.00
-              </Typography>
+              {balancesData?.map((balance) => {
+                if (balance.accountName === "safelock") {
+                  return (
+                    <Box key={balance._id}>
+                      <Typography
+                        variant="p"
+                        sx={{
+                          fontWeight: 600,
+                          color: "#0066b2",
+                          fontSize: "1.1rem",
+                          [theme.breakpoints.down("sm")]: {
+                            fontSize: "0.9rem",
+                          },
+                        }}
+                      >
+                        N{balance.accountBalance}
+                      </Typography>
+                    </Box>
+                  );
+                }
+              })}
             </Card>
           </Link>
         </Box>
