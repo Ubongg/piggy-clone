@@ -5,11 +5,8 @@ import Link from "next/link";
 const { Box, Typography, Button } = require("@mui/material");
 import { useRouter } from "next/navigation";
 import { useState } from "react";
-import { useSession } from "next-auth/react";
-import { toast } from "react-toastify";
 
 const Register = () => {
-  const session = useSession();
   const { safeColor, mutateBalances } = useGlobalContext();
   const [error, setError] = useState(null);
 

@@ -101,6 +101,13 @@ const AppProvider = ({ children }) => {
     isLoading: balancesIsLoading,
   } = useSWR(`/api/balances?email=${session?.data?.user.email}`, fetcher);
 
+  const {
+    data: flexesData,
+    mutate: mutateFlexes,
+    error: flexesError,
+    isLoading: flexesIsLoading,
+  } = useSWR(`/api/flexes?email=${session?.data?.user.email}`, fetcher);
+
   const totalSavings = balancesData?.reduce(
     (sum, balance) => sum + balance.accountBalance,
     0
@@ -129,6 +136,8 @@ const AppProvider = ({ children }) => {
         balancesData,
         mutateBalances,
         totalSavings,
+        flexesData,
+        mutateFlexes,
       }}
     >
       {children}

@@ -1,6 +1,14 @@
 "use client";
 
-import { Box, Tab, Button, Card, Drawer, Typography } from "@mui/material";
+import {
+  Box,
+  Tab,
+  Button,
+  Card,
+  Drawer,
+  Typography,
+  Paper,
+} from "@mui/material";
 import Link from "next/link";
 import { useTheme } from "@mui/material/styles";
 import ProfileButton from "@/components/profileButton/ProfileButton";
@@ -12,6 +20,7 @@ import TopUpFlex from "@/components/topUpFlex/TopUpFlex";
 import { useGlobalContext } from "@/components/context/context";
 import { useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
+import AccountBalanceOutlinedIcon from "@mui/icons-material/AccountBalanceOutlined";
 
 const Flex = () => {
   const session = useSession();
@@ -26,6 +35,8 @@ const Flex = () => {
     toggleWithdrawDrawer,
     flexColor,
     balancesData,
+    flexesData,
+    mutateFlexes,
   } = useGlobalContext();
 
   const [all, setAll] = useState(true);
@@ -330,20 +341,159 @@ const Flex = () => {
                     justifyContent: "center",
                     alignItems: "center",
                     flexDirection: "column",
-                    mx: "50px",
+                    mx: "30px",
                     py: "20px",
-                    textAlign: "center",
+                    gap: "1.5rem",
                   }}
                 >
-                  <Typography
-                    variant="p"
-                    sx={{
-                      fontSize: "1rem",
-                      my: "5px",
-                    }}
-                  >
-                    No transactions to display for now
-                  </Typography>
+                  {all &&
+                    flexesData?.map((flex) => {
+                      return (
+                        <Box
+                          key={flex._id}
+                          sx={{
+                            display: "flex",
+                            alignItems: "center",
+                            gap: "1rem",
+                            width: "100%",
+                          }}
+                        >
+                          <Paper
+                            elevation={2}
+                            sx={{
+                              p: "15px 25px 10px",
+                              background: "#ffd7e9",
+                              color: flexColor,
+                            }}
+                          >
+                            <AccountBalanceOutlinedIcon
+                              style={{ fontSize: "1.8rem" }}
+                            />
+                          </Paper>
+                          <Box>
+                            <Typography
+                              variant="h6"
+                              sx={{
+                                textTransform: "capitalize",
+                                fontSize: "0.9rem",
+                              }}
+                            >
+                              {flex.title}
+                            </Typography>
+                            <Typography
+                              variant="h6"
+                              sx={{
+                                fontSize: "1.1rem",
+                                fontWeight: 600,
+                              }}
+                            >
+                              N{flex.amount}
+                            </Typography>
+                          </Box>
+                        </Box>
+                      );
+                    })}
+
+                  {credit &&
+                    flexesData?.map((flex) => {
+                      if (flex.type === "credit") {
+                        return (
+                          <Box
+                            key={flex._id}
+                            sx={{
+                              display: "flex",
+                              alignItems: "center",
+                              gap: "1rem",
+                              width: "100%",
+                            }}
+                          >
+                            <Paper
+                              elevation={2}
+                              sx={{
+                                p: "15px 25px 10px",
+                                background: "#ffd7e9",
+                                color: flexColor,
+                              }}
+                            >
+                              <AccountBalanceOutlinedIcon
+                                style={{ fontSize: "1.8rem" }}
+                              />
+                            </Paper>
+                            <Box>
+                              <Typography
+                                variant="h6"
+                                sx={{
+                                  textTransform: "capitalize",
+                                  fontSize: "0.9rem",
+                                }}
+                              >
+                                {flex.title}
+                              </Typography>
+                              <Typography
+                                variant="h6"
+                                sx={{
+                                  fontSize: "1.1rem",
+                                  fontWeight: 600,
+                                }}
+                              >
+                                N{flex.amount}
+                              </Typography>
+                            </Box>
+                          </Box>
+                        );
+                      }
+                    })}
+
+                  {debit &&
+                    flexesData?.map((flex) => {
+                      if (flex.type === "debit") {
+                        return (
+                          <Box
+                            key={flex._id}
+                            sx={{
+                              display: "flex",
+                              alignItems: "center",
+                              gap: "1rem",
+                              width: "100%",
+                            }}
+                          >
+                            <Paper
+                              elevation={2}
+                              sx={{
+                                p: "15px 25px 10px",
+                                background: "#ffd7e9",
+                                color: flexColor,
+                              }}
+                            >
+                              <AccountBalanceOutlinedIcon
+                                style={{ fontSize: "1.8rem" }}
+                              />
+                            </Paper>
+                            <Box>
+                              <Typography
+                                variant="h6"
+                                sx={{
+                                  textTransform: "capitalize",
+                                  fontSize: "0.9rem",
+                                }}
+                              >
+                                {flex.title}
+                              </Typography>
+                              <Typography
+                                variant="h6"
+                                sx={{
+                                  fontSize: "1.1rem",
+                                  fontWeight: 600,
+                                }}
+                              >
+                                N{flex.amount}
+                              </Typography>
+                            </Box>
+                          </Box>
+                        );
+                      }
+                    })}
+
                   {["right"].map((anchor) => (
                     <React.Fragment key={anchor}>
                       <Button

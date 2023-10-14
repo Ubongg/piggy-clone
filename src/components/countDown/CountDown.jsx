@@ -5,8 +5,13 @@ import { useSession } from "next-auth/react";
 
 const CountDown = ({ targetDate, id, amount }) => {
   const session = useSession();
-  const { safeColor, safelocksData, mutateSafelocks, balancesData } =
-    useGlobalContext();
+  const {
+    safeColor,
+    safelocksData,
+    mutateSafelocks,
+    balancesData,
+    mutateFlexes,
+  } = useGlobalContext();
   const [daysLeft, setDaysLeft] = useState(0);
 
   const flexBalID = balancesData?.find((balance) => {
@@ -31,6 +36,24 @@ const CountDown = ({ targetDate, id, amount }) => {
       mutateBalances();
     } catch (error) {
       console.log("Error updating flex balance ");
+    }
+  };
+
+  const createFlex = async () => {
+    try {
+      await fetch(`/api/flexes`, {
+        method: "POST",
+        body: JSON.stringify({
+          amount,
+          title: "Flex Credited",
+          type: "credit",
+          email: session.data.user.email,
+        }),
+      });
+
+      mutateFlexes();
+    } catch (error) {
+      console.log("Error creating flex");
     }
   };
 
@@ -61,6 +84,7 @@ const CountDown = ({ targetDate, id, amount }) => {
         setDaysLeft(0);
 
         changeStatus(id);
+        createFlex();
         updateFlexBalance(id, amount);
       } else {
         const daysRemaining = Math.ceil(timeDifference / (1000 * 60 * 60 * 24));
