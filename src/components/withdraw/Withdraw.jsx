@@ -8,27 +8,76 @@ import { toast } from "react-toastify";
 const Withdraw = ({ toggleWithdrawDrawer, anchor }) => {
   const session = useSession();
   const theme = useTheme();
-  const { flexColor, mutateWithdrawals } = useGlobalContext();
+  const {
+    flexColor,
+    mutateWithdrawals,
+    balancesData,
+    mutateBalances,
+    mutateFlexes,
+  } = useGlobalContext();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     const withdrawalAmount = e.target[0].value;
     const password = e.target[1].value;
 
-    try {
-      await fetch("/api/withdrawals", {
-        method: "POST",
-        body: JSON.stringify({
-          withdrawalAmount,
-          password,
-          email: session?.data.user.email,
-        }),
-      });
-      mutateWithdrawals();
-      e.target.reset();
-      toast.success("Money Withdrawn");
-    } catch (error) {
-      console.log(error);
+    const balance = balancesData?.find((balance) => {
+      return (
+        balance.accountName === "flex" &&
+        balance.email === session.data.user.email
+      );
+    });
+
+    if (balance.accountBalance > withdrawalAmount && withdrawalAmount > 0) {
+      const newBalance = balance.accountBalance - withdrawalAmount;
+
+      try {
+        await fetch("/api/withdrawals", {
+          method: "POST",
+          body: JSON.stringify({
+            withdrawalAmount,
+            password,
+            email: session?.data.user.email,
+          }),
+        });
+        mutateWithdrawals();
+        e.target.reset();
+        toast.success("Money Withdrawn");
+      } catch (error) {
+        console.log(error);
+      }
+
+      try {
+        await fetch(`/api/balances/${balance._id}`, {
+          method: "PUT",
+          body: JSON.stringify({
+            ...balancesData,
+            accountBalance: newBalance,
+          }),
+        });
+        mutateBalances();
+      } catch (error) {
+        console.log("Error updating flex balance ");
+      }
+
+      try {
+        await fetch(`/api/flexes`, {
+          method: "POST",
+          body: JSON.stringify({
+            amount: withdrawalAmount,
+            title: "Flex Debited",
+            type: "debit",
+            email: session.data.user.email,
+          }),
+        });
+        mutateFlexes();
+      } catch (error) {
+        console.log("Error creating flex");
+      }
+    } else {
+      toast.error(
+        "Insufficient funds or withdrawal amount should be more than 0"
+      );
     }
   };
 
