@@ -12,7 +12,7 @@ import { useSession } from "next-auth/react";
 const MakeSafelock = ({ toggleCreateSafelockDrawer, anchor }) => {
   const session = useSession();
   const theme = useTheme();
-  const { safeColor, mutateSafelocks } = useGlobalContext();
+  const { safeColor, mutateSafelocks, balancesData } = useGlobalContext();
   const falseDate = (date) => new Date() < date;
   const [payBackDate, setPayBackDate] = useState(new Date());
 
@@ -21,22 +21,33 @@ const MakeSafelock = ({ toggleCreateSafelockDrawer, anchor }) => {
     const amount = e.target[0].value;
     const title = e.target[1].value;
 
-    try {
-      await fetch("/api/safelocks", {
-        method: "POST",
-        body: JSON.stringify({
-          amount,
-          title,
-          paybackDate: payBackDate,
-          status: "ongoing",
-          email: session.data.user.email,
-        }),
-      });
-      mutateSafelocks();
-      e.target.reset();
-      toast.success("Safelock Created");
-    } catch (error) {
-      toast.error("Safelock Not Created");
+    const balance = balancesData?.find((balance) => {
+      return (
+        balance.accountName === "flex" &&
+        balance.email === session.data.user.email
+      );
+    });
+
+    if (balance.accountBalance > amount && amount > 0) {
+      try {
+        await fetch("/api/safelocks", {
+          method: "POST",
+          body: JSON.stringify({
+            amount,
+            title,
+            paybackDate: payBackDate,
+            status: "ongoing",
+            email: session.data.user.email,
+          }),
+        });
+        mutateSafelocks();
+        e.target.reset();
+        toast.success("Safelock Created");
+      } catch (error) {
+        toast.error("Safelock Not Created");
+      }
+    } else {
+      toast.error("Insufficient funds in flex or amount should be more than 0");
     }
   };
 
@@ -84,7 +95,7 @@ const MakeSafelock = ({ toggleCreateSafelockDrawer, anchor }) => {
         </Typography>
         <form
           style={{
-            paddingTop: "30px",
+            paddingTop: "20px",
             display: "flex",
             flexDirection: "column",
           }}
@@ -155,6 +166,38 @@ const MakeSafelock = ({ toggleCreateSafelockDrawer, anchor }) => {
             required
             className="datePickerStyle"
           />
+          <label
+            style={{
+              margin: "5px 0",
+              fontSize: "0.75rem",
+              fontWeight: 600,
+            }}
+          >
+            Source of Funds
+          </label>
+          {balancesData?.map((balance) => {
+            if (balance.accountName === "flex") {
+              return (
+                <div key={balance._id}>
+                  <p
+                    style={{
+                      outline: "none",
+                      padding: "15px 15px 17px",
+                      border: "none",
+                      background: "#edf2f7",
+                      marginBottom: "30px",
+                      width: "100%",
+                      fontSize: "1rem",
+                      borderRadius: "0.5rem",
+                      color: "rgb(119, 118, 118)",
+                    }}
+                  >
+                    Flex Account - N{balance.accountBalance}
+                  </p>
+                </div>
+              );
+            }
+          })}
           <button
             style={{
               padding: "12px 0",
@@ -171,6 +214,7 @@ const MakeSafelock = ({ toggleCreateSafelockDrawer, anchor }) => {
               textTransform: "uppercase",
               height: "50px",
               cursor: "pointer",
+              marginBottom: "50px",
             }}
           >
             submit
