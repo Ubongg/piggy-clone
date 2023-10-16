@@ -8,29 +8,29 @@ import { toast } from "react-toastify";
 const Withdraw = ({ toggleWithdrawDrawer, anchor }) => {
   const session = useSession();
   const theme = useTheme();
-  const { flexColor } = useGlobalContext();
+  const { flexColor, mutateWithdrawals } = useGlobalContext();
 
-  //   const handleSubmit = async (e) => {
-  //     e.preventDefault();
-  //     const withdrawalAmount = e.target[0].value;
-  //     const password = e.target[1].value;
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    const withdrawalAmount = e.target[0].value;
+    const password = e.target[1].value;
 
-  //     try {
-  //       await fetch("/api/withdrawals", {
-  //         method: "POST",
-  //         body: JSON.stringify({
-  //           withdrawalAmount,
-  //           password,
-  //           email: session?.data.user.email,
-  //         }),
-  //       });
-  //       mutateWithdrawals();
-  //       e.target.reset();
-  //       toast.success("Money Withdrawn");
-  //     } catch (error) {
-  //       console.log(error);
-  //     }
-  //   };
+    try {
+      await fetch("/api/withdrawals", {
+        method: "POST",
+        body: JSON.stringify({
+          withdrawalAmount,
+          password,
+          email: session?.data.user.email,
+        }),
+      });
+      mutateWithdrawals();
+      e.target.reset();
+      toast.success("Money Withdrawn");
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
   return (
     <Box
@@ -66,7 +66,7 @@ const Withdraw = ({ toggleWithdrawDrawer, anchor }) => {
           flexDirection: "column",
           width: "100%",
         }}
-        // onSubmit={handleSubmit}
+        onSubmit={handleSubmit}
       >
         <label
           style={{
