@@ -12,9 +12,25 @@ import { useSession } from "next-auth/react";
 const MakeSafelock = ({ toggleCreateSafelockDrawer, anchor }) => {
   const session = useSession();
   const theme = useTheme();
-  const { safeColor, mutateSafelocks, balancesData } = useGlobalContext();
-  const falseDate = (date) => new Date() < date;
-  const [payBackDate, setPayBackDate] = useState(new Date());
+  const {
+    safeColor,
+    mutateSafelocks,
+    balancesData,
+    mutateBalances,
+    mutateFlexes,
+  } = useGlobalContext();
+  // const falseDate = (date) => new Date() < date;
+  const falseDate = (date) => {
+    const currentDate = new Date();
+    currentDate.setDate(currentDate.getDate() + 9); // Add 10 days to the current date
+    return currentDate < date;
+  };
+  function addDays(date, days) {
+    const result = new Date(date);
+    result.setDate(result.getDate() + days);
+    return result;
+  }
+  const [payBackDate, setPayBackDate] = useState(addDays(new Date(), 10));
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -29,6 +45,8 @@ const MakeSafelock = ({ toggleCreateSafelockDrawer, anchor }) => {
     });
 
     if (balance.accountBalance > amount && amount > 0) {
+      const newBalance = balance.accountBalance - amount;
+
       try {
         await fetch("/api/safelocks", {
           method: "POST",
@@ -45,6 +63,34 @@ const MakeSafelock = ({ toggleCreateSafelockDrawer, anchor }) => {
         toast.success("Safelock Created");
       } catch (error) {
         toast.error("Safelock Not Created");
+      }
+
+      try {
+        await fetch(`/api/balances/${balance._id}`, {
+          method: "PUT",
+          body: JSON.stringify({
+            ...balancesData,
+            accountBalance: newBalance,
+          }),
+        });
+        mutateBalances();
+      } catch (error) {
+        console.log("Error updating flex balance ");
+      }
+
+      try {
+        await fetch(`/api/flexes`, {
+          method: "POST",
+          body: JSON.stringify({
+            amount,
+            title: "Flex Debited",
+            type: "debit",
+            email: session.data.user.email,
+          }),
+        });
+        mutateFlexes();
+      } catch (error) {
+        console.log("Error creating flex");
       }
     } else {
       toast.error("Insufficient funds in flex or amount should be more than 0");

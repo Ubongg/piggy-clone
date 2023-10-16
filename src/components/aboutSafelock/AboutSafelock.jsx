@@ -89,7 +89,7 @@ const AboutSafelock = ({ toggleAboutSafelockDrawer, anchor }) => {
             >
               Safelock allows you to set money aside for a fixed period of time
               without having access to it until maturity. It's like having your
-              own custom fixed deposit.
+              own custom fixed deposit. Lock funds for at least 10 days.
             </Typography>
           </Box>
         </Box>
