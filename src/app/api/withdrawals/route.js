@@ -4,6 +4,7 @@ import Withdrawal from "@/models/Withdrawal";
 import bcrypt from "bcryptjs";
 import User from "@/models/User";
 import Balance from "@/models/Balance";
+import Flex from "@/models/Flex";
 
 export const GET = async (request) => {
   const url = new URL(request.url);
@@ -33,7 +34,7 @@ export const POST = async (request) => {
   }
 
   const balance = await Balance.findOne({
-    email: user.email,
+    email,
     accountName: "flex",
   });
   // Compare the provided password with the stored hashed password
@@ -49,10 +50,34 @@ export const POST = async (request) => {
 
     await Withdrawal.deleteMany({});
 
+    const newBalance = balance.accountBalance - withdrawalAmount;
+
+    try {
+      await Balance.findByIdAndUpdate(balance._id, {
+        accountBalance: newBalance,
+      });
+    } catch (error) {
+      return new NextResponse("Error updating flex balance", { status: 400 });
+    }
+
+    const newFlex = new Flex({
+      amount: withdrawalAmount,
+      title: "Flex Debited",
+      type: "debit",
+      email,
+    });
+
+    try {
+      await newFlex.save();
+    } catch (error) {
+      return new NextResponse("Error creating flex", { status: 400 });
+    }
+
     const newWithdrawal = new Withdrawal({
       withdrawalAmount,
       email,
     });
+
     try {
       await newWithdrawal.save();
       return new NextResponse("Withdrawal has been Saved", {

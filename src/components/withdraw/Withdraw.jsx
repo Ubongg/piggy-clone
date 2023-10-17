@@ -29,8 +29,6 @@ const Withdraw = ({ toggleWithdrawDrawer, anchor }) => {
     });
 
     if (balance.accountBalance > withdrawalAmount && withdrawalAmount > 0) {
-      const newBalance = balance.accountBalance - withdrawalAmount;
-
       try {
         await fetch("/api/withdrawals", {
           method: "POST",
@@ -42,37 +40,8 @@ const Withdraw = ({ toggleWithdrawDrawer, anchor }) => {
         });
         mutateWithdrawals();
         e.target.reset();
-        toast.success("Money Withdrawn");
       } catch (error) {
         console.log(error);
-      }
-
-      try {
-        await fetch(`/api/balances/${balance._id}`, {
-          method: "PUT",
-          body: JSON.stringify({
-            ...balancesData,
-            accountBalance: newBalance,
-          }),
-        });
-        mutateBalances();
-      } catch (error) {
-        console.log("Error updating flex balance ");
-      }
-
-      try {
-        await fetch(`/api/flexes`, {
-          method: "POST",
-          body: JSON.stringify({
-            amount: withdrawalAmount,
-            title: "Flex Debited",
-            type: "debit",
-            email: session.data.user.email,
-          }),
-        });
-        mutateFlexes();
-      } catch (error) {
-        console.log("Error creating flex");
       }
     } else {
       toast.error(

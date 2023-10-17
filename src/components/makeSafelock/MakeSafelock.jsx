@@ -44,7 +44,7 @@ const MakeSafelock = ({ toggleCreateSafelockDrawer, anchor }) => {
       );
     });
 
-    if (balance.accountBalance > amount && amount >= 1000) {
+    if (balance.accountBalance >= amount && amount >= 1000) {
       const newBalance = balance.accountBalance - amount;
 
       try {
