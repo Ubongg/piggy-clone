@@ -2,12 +2,10 @@
 
 import * as React from "react";
 import { Box, Button, Card, Drawer, Typography } from "@mui/material";
-
 import ShieldOutlinedIcon from "@mui/icons-material/ShieldOutlined";
+import ThumbUpAltOutlinedIcon from "@mui/icons-material/ThumbUpAltOutlined";
 import AccountBalanceOutlinedIcon from "@mui/icons-material/AccountBalanceOutlined";
 import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
-import ThumbUpAltOutlinedIcon from "@mui/icons-material/ThumbUpAltOutlined";
-import ReceiptIcon from "@mui/icons-material/Receipt";
 import Link from "next/link";
 import Activities from "@/components/activities/Activities";
 import { useTheme } from "@mui/material/styles";
@@ -21,8 +19,23 @@ const Home = () => {
   const session = useSession();
   const router = useRouter();
   const theme = useTheme();
-  const { activities, toggleActivitiesDrawer, balancesData, totalSavings } =
-    useGlobalContext();
+  const {
+    activities,
+    toggleActivitiesDrawer,
+    balancesData,
+    totalSavings,
+    setFlexActivities,
+    setAllActivities,
+    activitiesData,
+    allActivities,
+    flexColor,
+    safeColor,
+  } = useGlobalContext();
+
+  useEffect(() => {
+    setFlexActivities(false);
+    setAllActivities(true);
+  }, []);
 
   useEffect(() => {
     if (session.status === "unauthenticated") {
@@ -270,9 +283,9 @@ const Home = () => {
           <Box
             sx={{
               display: "flex",
-              alignItems: "center",
+              flexDirection: "column",
               border: "1px solid rgb(224, 222, 222)",
-              gap: "0.5rem",
+              gap: "1.2rem",
               borderBottomRightRadius: "0.5rem",
               borderTopLeftRadius: "0.5rem",
               borderTopRightRadius: "0.5rem",
@@ -283,20 +296,97 @@ const Home = () => {
               },
             }}
           >
-            <ReceiptIcon style={{ color: "#213555", fontSize: "2rem" }} />
-            <Box>
-              <Typography
-                variant="h6"
-                fontSize="0.7rem"
-                mb={-0.7}
-                color="#213555"
-              >
-                Just registered
-              </Typography>
-              <Typography variant="p" fontSize="0.7rem" color="#213555">
-                3 yrs ago
-              </Typography>
-            </Box>
+            {allActivities &&
+              activitiesData
+                ?.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt))
+                .slice(0, 5)
+                .map((activity) => {
+                  const originalDateString = activity.createdAt;
+                  const originalDate = new Date(originalDateString);
+
+                  const year = originalDate.getFullYear();
+                  const month = String(originalDate.getMonth() + 1).padStart(
+                    2,
+                    "0"
+                  ); // Months are zero-based, so add 1
+                  const day = String(originalDate.getDate()).padStart(2, "0");
+
+                  const formattedDate = `${day}-${month}-${year}`;
+
+                  return (
+                    <Box
+                      key={activity._id}
+                      sx={{
+                        display: "flex",
+                        alignItems: "center",
+                        gap: "1rem",
+                        width: "100%",
+                      }}
+                    >
+                      {activity.accountName === "flex" ? (
+                        <AccountBalanceOutlinedIcon
+                          style={{
+                            color: flexColor,
+                            fontSize: "2.5rem",
+                            background: "#ffd7e9",
+                            borderRadius: "50%",
+                            padding: "10px",
+                          }}
+                        />
+                      ) : (
+                        <LockOutlinedIcon
+                          style={{
+                            color: safeColor,
+                            fontSize: "2.5rem",
+                            background: "#9fd7fe",
+                            borderRadius: "50%",
+                            padding: "10px",
+                          }}
+                        />
+                      )}
+                      <Box>
+                        <Typography
+                          variant="h6"
+                          fontWeight={600}
+                          fontSize="0.8rem"
+                          mb={-0.7}
+                          color="#213555"
+                        >
+                          {activity.title}
+                        </Typography>
+                        <Typography
+                          variant="p"
+                          fontSize="0.7rem"
+                          color="#213555"
+                        >
+                          {formattedDate}
+                        </Typography>
+                      </Box>
+                      <Typography
+                        variant="h6"
+                        color={
+                          activity.accountName === "flex"
+                            ? flexColor
+                            : safeColor
+                        }
+                        sx={{
+                          // background:
+                          //   activity.accountName === "flex"
+                          //     ? "#ffd7e9"
+                          //     : "#9fd7fe",
+                          // borderRadius: "1rem",
+                          // padding: "5px 10px",
+                          fontWeight: 600,
+                          ml: "auto",
+
+                          fontSize: "0.8rem",
+                        }}
+                      >
+                        {activity.amount}
+                      </Typography>
+                    </Box>
+                  );
+                })}
           </Box>
           {["right"].map((anchor) => (
             <React.Fragment key={anchor}>

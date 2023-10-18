@@ -36,7 +36,8 @@ const Flex = () => {
     flexColor,
     balancesData,
     flexesData,
-    mutateFlexes,
+    setFlexActivities,
+    setAllActivities,
   } = useGlobalContext();
 
   const [all, setAll] = useState(true);
@@ -48,6 +49,11 @@ const Flex = () => {
   const handleChange = (event, newValue) => {
     setValue(newValue);
   };
+
+  useEffect(() => {
+    setFlexActivities(true);
+    setAllActivities(false);
+  }, []);
 
   useEffect(() => {
     if (session.status === "unauthenticated") {
@@ -347,56 +353,66 @@ const Flex = () => {
                   }}
                 >
                   {all &&
-                    flexesData?.map((flex) => {
-                      return (
-                        <Box
-                          key={flex._id}
-                          sx={{
-                            display: "flex",
-                            alignItems: "center",
-                            gap: "1rem",
-                            width: "100%",
-                          }}
-                        >
-                          <Paper
-                            elevation={2}
+                    flexesData
+                      ?.sort(
+                        (a, b) => new Date(b.createdAt) - new Date(a.createdAt)
+                      )
+                      .slice(0, 5)
+                      .map((flex) => {
+                        return (
+                          <Box
+                            key={flex._id}
                             sx={{
-                              p: "15px 25px 10px",
-                              background: "#ffd7e9",
-                              color: flexColor,
+                              display: "flex",
+                              alignItems: "center",
+                              gap: "1rem",
+                              width: "100%",
                             }}
                           >
-                            <AccountBalanceOutlinedIcon
-                              style={{ fontSize: "1.8rem" }}
-                            />
-                          </Paper>
-                          <Box>
-                            <Typography
-                              variant="h6"
+                            <Paper
+                              elevation={2}
                               sx={{
-                                textTransform: "capitalize",
-                                fontSize: "0.9rem",
+                                p: "15px 25px 10px",
+                                background: "#ffd7e9",
+                                color: flexColor,
                               }}
                             >
-                              {flex.title}
-                            </Typography>
-                            <Typography
-                              variant="h6"
-                              sx={{
-                                fontSize: "1.1rem",
-                                fontWeight: 600,
-                              }}
-                            >
-                              N{flex.amount}
-                            </Typography>
+                              <AccountBalanceOutlinedIcon
+                                style={{ fontSize: "1.8rem" }}
+                              />
+                            </Paper>
+                            <Box>
+                              <Typography
+                                variant="h6"
+                                sx={{
+                                  textTransform: "capitalize",
+                                  fontSize: "0.9rem",
+                                }}
+                              >
+                                {flex.title}
+                              </Typography>
+                              <Typography
+                                variant="h6"
+                                sx={{
+                                  fontSize: "1.1rem",
+                                  fontWeight: 600,
+                                }}
+                              >
+                                N{flex.amount}
+                              </Typography>
+                            </Box>
                           </Box>
-                        </Box>
-                      );
-                    })}
+                        );
+                      })}
 
                   {credit &&
-                    flexesData?.map((flex) => {
-                      if (flex.type === "credit") {
+                    flexesData
+                      ?.filter((flex) => flex.type === "credit")
+                      .sort(
+                        (a, b) => new Date(b.createdAt) - new Date(a.createdAt)
+                      )
+                      .slice(0, 5)
+                      .map((flex) => {
                         return (
                           <Box
                             key={flex._id}
@@ -441,12 +457,16 @@ const Flex = () => {
                             </Box>
                           </Box>
                         );
-                      }
-                    })}
+                      })}
 
                   {debit &&
-                    flexesData?.map((flex) => {
-                      if (flex.type === "debit") {
+                    flexesData
+                      ?.filter((flex) => flex.type === "debit")
+                      .sort(
+                        (a, b) => new Date(b.createdAt) - new Date(a.createdAt)
+                      )
+                      .slice(0, 5)
+                      .map((flex) => {
                         return (
                           <Box
                             key={flex._id}
@@ -491,8 +511,7 @@ const Flex = () => {
                             </Box>
                           </Box>
                         );
-                      }
-                    })}
+                      })}
 
                   {["right"].map((anchor) => (
                     <React.Fragment key={anchor}>

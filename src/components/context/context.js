@@ -12,6 +12,9 @@ const AppProvider = ({ children }) => {
   const greyBorder = "rgb(224, 222, 222)";
   const flexColor = "#e0218a";
 
+  const [flexActivities, setFlexActivities] = React.useState(false);
+  const [allActivities, setAllActivities] = React.useState(true);
+
   const [open, setOpen] = React.useState(false);
   const [activities, setActivities] = React.useState({
     right: false,
@@ -156,6 +159,10 @@ const AppProvider = ({ children }) => {
         mutateWithdrawals,
         activitiesData,
         mutateActivities,
+        flexActivities,
+        setFlexActivities,
+        allActivities,
+        setAllActivities,
       }}
     >
       {children}

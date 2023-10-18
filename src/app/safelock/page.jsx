@@ -312,60 +312,64 @@ const Safelock = () => {
                   }}
                 >
                   {ongoing &&
-                    safelocksData?.map((safelock) => {
-                      if (safelock.status === "ongoing") {
-                        return (
-                          <Box
-                            key={safelock._id}
-                            sx={{
-                              display: "flex",
-                              alignItems: "center",
-                              gap: "1rem",
-                              position: "relative",
-                              width: "100%",
-                            }}
-                          >
-                            <Paper
-                              elevation={2}
+                    safelocksData
+                      ?.sort(
+                        (a, b) => new Date(b.createdAt) - new Date(a.createdAt)
+                      )
+                      .map((safelock) => {
+                        if (safelock.status === "ongoing") {
+                          return (
+                            <Box
+                              key={safelock._id}
                               sx={{
-                                p: "15px 25px 10px",
-                                background: "#9fd7fe",
-                                color: safeColor,
+                                display: "flex",
+                                alignItems: "center",
+                                gap: "1rem",
+                                position: "relative",
+                                width: "100%",
                               }}
                             >
-                              <LockOutlinedIcon
-                                style={{ fontSize: "1.8rem" }}
+                              <Paper
+                                elevation={2}
+                                sx={{
+                                  p: "15px 25px 10px",
+                                  background: "#9fd7fe",
+                                  color: safeColor,
+                                }}
+                              >
+                                <LockOutlinedIcon
+                                  style={{ fontSize: "1.8rem" }}
+                                />
+                              </Paper>
+                              <Box>
+                                <Typography
+                                  variant="h6"
+                                  sx={{
+                                    textTransform: "capitalize",
+                                    fontSize: "0.9rem",
+                                  }}
+                                >
+                                  {safelock.title}
+                                </Typography>
+                                <Typography
+                                  variant="h6"
+                                  sx={{
+                                    fontSize: "1.1rem",
+                                    fontWeight: 600,
+                                  }}
+                                >
+                                  N{safelock.amount}
+                                </Typography>
+                              </Box>
+                              <CountDown
+                                targetDate={safelock.paybackDate}
+                                id={safelock._id}
+                                amount={safelock.amount}
                               />
-                            </Paper>
-                            <Box>
-                              <Typography
-                                variant="h6"
-                                sx={{
-                                  textTransform: "capitalize",
-                                  fontSize: "0.9rem",
-                                }}
-                              >
-                                {safelock.title}
-                              </Typography>
-                              <Typography
-                                variant="h6"
-                                sx={{
-                                  fontSize: "1.1rem",
-                                  fontWeight: 600,
-                                }}
-                              >
-                                N{safelock.amount}
-                              </Typography>
                             </Box>
-                            <CountDown
-                              targetDate={safelock.paybackDate}
-                              id={safelock._id}
-                              amount={safelock.amount}
-                            />
-                          </Box>
-                        );
-                      }
-                    })}
+                          );
+                        }
+                      })}
 
                   {ongoing && safelocksData?.length === 0 && (
                     <Typography variant="p" fontSize="0.9rem">
@@ -374,67 +378,71 @@ const Safelock = () => {
                   )}
 
                   {completed &&
-                    safelocksData?.map((safelock) => {
-                      if (safelock.status === "completed") {
-                        return (
-                          <Box
-                            key={safelock._id}
-                            sx={{
-                              display: "flex",
-                              alignItems: "center",
-                              gap: "1rem",
-                              position: "relative",
-                              width: "100%",
-                            }}
-                          >
-                            <Paper
-                              elevation={2}
+                    safelocksData
+                      ?.sort(
+                        (a, b) => new Date(b.createdAt) - new Date(a.createdAt)
+                      )
+                      .map((safelock) => {
+                        if (safelock.status === "completed") {
+                          return (
+                            <Box
+                              key={safelock._id}
                               sx={{
-                                p: "15px 25px 10px",
-                                background: "#9fd7fe",
-                                color: safeColor,
+                                display: "flex",
+                                alignItems: "center",
+                                gap: "1rem",
+                                position: "relative",
+                                width: "100%",
                               }}
                             >
-                              <LockOutlinedIcon
-                                style={{ fontSize: "1.8rem" }}
-                              />
-                            </Paper>
-                            <Box>
-                              <Typography
-                                variant="h6"
+                              <Paper
+                                elevation={2}
                                 sx={{
-                                  textTransform: "capitalize",
+                                  p: "15px 25px 10px",
+                                  background: "#9fd7fe",
+                                  color: safeColor,
+                                }}
+                              >
+                                <LockOutlinedIcon
+                                  style={{ fontSize: "1.8rem" }}
+                                />
+                              </Paper>
+                              <Box>
+                                <Typography
+                                  variant="h6"
+                                  sx={{
+                                    textTransform: "capitalize",
+                                    fontSize: "0.9rem",
+                                  }}
+                                >
+                                  {safelock.title}
+                                </Typography>
+                                <Typography
+                                  variant="h6"
+                                  sx={{
+                                    fontSize: "1.1rem",
+                                    fontWeight: 600,
+                                  }}
+                                >
+                                  N{safelock.amount}
+                                </Typography>
+                              </Box>
+                              <Typography
+                                variant="p"
+                                sx={{
                                   fontSize: "0.9rem",
+                                  position: "absolute",
+                                  right: 0,
+                                  bottom: "0.5rem",
+                                  color: safeColor,
                                 }}
                               >
-                                {safelock.title}
-                              </Typography>
-                              <Typography
-                                variant="h6"
-                                sx={{
-                                  fontSize: "1.1rem",
-                                  fontWeight: 600,
-                                }}
-                              >
-                                N{safelock.amount}
+                                paid
                               </Typography>
                             </Box>
-                            <Typography
-                              variant="p"
-                              sx={{
-                                fontSize: "0.9rem",
-                                position: "absolute",
-                                right: 0,
-                                bottom: "0.5rem",
-                                color: safeColor,
-                              }}
-                            >
-                              paid
-                            </Typography>
-                          </Box>
-                        );
-                      }
-                    })}
+                          );
+                        }
+                      })}
                   {completed && safelocksData?.length === 0 && (
                     <Typography variant="p" fontSize="0.9rem">
                       You have no completed safelocks just yet. Let's get you
