@@ -99,9 +99,9 @@ const MakeSafelock = ({ toggleCreateSafelockDrawer, anchor }) => {
           method: "POST",
           body: JSON.stringify({
             amount,
-            accountName: "safelock",
-            title: "Safelock Credited",
-            type: "credit",
+            accountName: "flex",
+            title: "Flex Debited",
+            type: "debit",
             email: session.data.user.email,
           }),
         });
@@ -115,9 +115,9 @@ const MakeSafelock = ({ toggleCreateSafelockDrawer, anchor }) => {
           method: "POST",
           body: JSON.stringify({
             amount,
-            accountName: "flex",
-            title: "Flex Debited",
-            type: "debit",
+            accountName: "safelock",
+            title: "Safelock Credited",
+            type: "credit",
             email: session.data.user.email,
           }),
         });

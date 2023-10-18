@@ -68,7 +68,7 @@ const Flex = () => {
           width: "100%",
           m: "38px 45px",
           [theme.breakpoints.down("sm")]: {
-            m: "38px 15px",
+            m: "70px 15px",
           },
         }}
       >
@@ -405,6 +405,12 @@ const Flex = () => {
                         );
                       })}
 
+                  {all && flexesData?.length === 0 && (
+                    <Typography variant="p" fontSize="0.9rem">
+                      You have no flex transaction
+                    </Typography>
+                  )}
+
                   {credit &&
                     flexesData
                       ?.filter((flex) => flex.type === "credit")
@@ -458,6 +464,14 @@ const Flex = () => {
                           </Box>
                         );
                       })}
+
+                  {credit &&
+                    flexesData?.filter((flex) => flex.type === "credit")
+                      .length === 0 && (
+                      <Typography variant="p" fontSize="0.9rem">
+                        You have no credit flex transaction
+                      </Typography>
+                    )}
 
                   {debit &&
                     flexesData
@@ -513,6 +527,14 @@ const Flex = () => {
                         );
                       })}
 
+                  {debit &&
+                    flexesData?.filter((flex) => flex.type === "debit")
+                      .length === 0 && (
+                      <Typography variant="p" fontSize="0.9rem">
+                        You have no debit flex transaction
+                      </Typography>
+                    )}
+
                   {["right"].map((anchor) => (
                     <React.Fragment key={anchor}>
                       <Button
@@ -535,6 +557,8 @@ const Flex = () => {
                         <Activities
                           toggleActivitiesDrawer={toggleActivitiesDrawer}
                           anchor={anchor}
+                          debit={debit}
+                          credit={credit}
                         />
                       </Drawer>
                     </React.Fragment>

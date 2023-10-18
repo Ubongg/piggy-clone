@@ -5,7 +5,7 @@ import { useGlobalContext } from "../context/context";
 import AccountBalanceOutlinedIcon from "@mui/icons-material/AccountBalanceOutlined";
 import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 
-const Activities = ({ toggleActivitiesDrawer, anchor }) => {
+const Activities = ({ toggleActivitiesDrawer, anchor, debit, credit }) => {
   const theme = useTheme();
   const {
     safeColor,
@@ -62,68 +62,73 @@ const Activities = ({ toggleActivitiesDrawer, anchor }) => {
         </Typography>
         {flexActivities &&
           activitiesData
-            ?.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt))
+            ?.filter((activity) =>
+              debit
+                ? activity.accountName === "flex" && activity.type === "debit"
+                : credit
+                ? activity.accountName === "flex" && activity.type === "credit"
+                : activity.accountName === "flex"
+            )
+            .sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt))
             .map((activity) => {
-              if (activity.accountName === "flex") {
-                const originalDateString = activity.createdAt;
-                const originalDate = new Date(originalDateString);
+              const originalDateString = activity.createdAt;
+              const originalDate = new Date(originalDateString);
 
-                const year = originalDate.getFullYear();
-                const month = String(originalDate.getMonth() + 1).padStart(
-                  2,
-                  "0"
-                ); // Months are zero-based, so add 1
-                const day = String(originalDate.getDate()).padStart(2, "0");
+              const year = originalDate.getFullYear();
+              const month = String(originalDate.getMonth() + 1).padStart(
+                2,
+                "0"
+              ); // Months are zero-based, so add 1
+              const day = String(originalDate.getDate()).padStart(2, "0");
 
-                const formattedDate = `${day}-${month}-${year}`;
+              const formattedDate = `${day}-${month}-${year}`;
 
-                return (
-                  <Box
-                    key={activity._id}
-                    sx={{
-                      display: "flex",
-                      alignItems: "center",
-                      gap: "1rem",
-                      width: "100%",
+              return (
+                <Box
+                  key={activity._id}
+                  sx={{
+                    display: "flex",
+                    alignItems: "center",
+                    gap: "1rem",
+                    width: "100%",
+                  }}
+                >
+                  <AccountBalanceOutlinedIcon
+                    style={{
+                      color: flexColor,
+                      fontSize: "2.5rem",
+                      background: "#ffd7e9",
+                      borderRadius: "50%",
+                      padding: "10px",
                     }}
-                  >
-                    <AccountBalanceOutlinedIcon
-                      style={{
-                        color: flexColor,
-                        fontSize: "2.5rem",
-                        background: "#ffd7e9",
-                        borderRadius: "50%",
-                        padding: "10px",
-                      }}
-                    />
-                    <Box>
-                      <Typography
-                        variant="h6"
-                        fontWeight={600}
-                        fontSize="0.8rem"
-                        mb={-0.7}
-                        color="#213555"
-                      >
-                        {activity.title}
-                      </Typography>
-                      <Typography variant="p" fontSize="0.7rem" color="#213555">
-                        {formattedDate}
-                      </Typography>
-                    </Box>
+                  />
+                  <Box>
                     <Typography
                       variant="h6"
-                      color={flexColor}
-                      sx={{
-                        fontWeight: 600,
-                        ml: "auto",
-                        fontSize: "0.8rem",
-                      }}
+                      fontWeight={600}
+                      fontSize="0.8rem"
+                      mb={-0.7}
+                      color="#213555"
                     >
-                      {activity.amount}
+                      {activity.title}
+                    </Typography>
+                    <Typography variant="p" fontSize="0.7rem" color="#213555">
+                      {formattedDate}
                     </Typography>
                   </Box>
-                );
-              }
+                  <Typography
+                    variant="h6"
+                    color={flexColor}
+                    sx={{
+                      fontWeight: 600,
+                      ml: "auto",
+                      fontSize: "0.8rem",
+                    }}
+                  >
+                    {activity.amount}
+                  </Typography>
+                </Box>
+              );
             })}
 
         {flexActivities &&
@@ -211,6 +216,11 @@ const Activities = ({ toggleActivitiesDrawer, anchor }) => {
                 </Box>
               );
             })}
+        {allActivities && activitiesData?.length === 0 && (
+          <Typography variant="p" fontSize="0.9rem">
+            You have no activity
+          </Typography>
+        )}
       </Box>
     </Box>
   );

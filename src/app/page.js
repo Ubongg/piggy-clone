@@ -51,7 +51,7 @@ const Home = () => {
           m: "38px 45px",
           overflowX: "auto",
           [theme.breakpoints.down("sm")]: {
-            m: "38px 15px",
+            m: "70px 15px",
           },
         }}
       >
@@ -370,15 +370,8 @@ const Home = () => {
                             : safeColor
                         }
                         sx={{
-                          // background:
-                          //   activity.accountName === "flex"
-                          //     ? "#ffd7e9"
-                          //     : "#9fd7fe",
-                          // borderRadius: "1rem",
-                          // padding: "5px 10px",
                           fontWeight: 600,
                           ml: "auto",
-
                           fontSize: "0.8rem",
                         }}
                       >
@@ -387,6 +380,11 @@ const Home = () => {
                     </Box>
                   );
                 })}
+            {allActivities && activitiesData?.length === 0 && (
+              <Typography variant="p" fontSize="0.9rem" color="#213555">
+                You have no recent activity
+              </Typography>
+            )}
           </Box>
           {["right"].map((anchor) => (
             <React.Fragment key={anchor}>
