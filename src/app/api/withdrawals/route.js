@@ -5,6 +5,7 @@ import bcrypt from "bcryptjs";
 import User from "@/models/User";
 import Balance from "@/models/Balance";
 import Flex from "@/models/Flex";
+import Activity from "@/models/Activity";
 
 export const GET = async (request) => {
   const url = new URL(request.url);
@@ -71,6 +72,20 @@ export const POST = async (request) => {
       await newFlex.save();
     } catch (error) {
       return new NextResponse("Error creating flex", { status: 400 });
+    }
+
+    const newActivity = new Activity({
+      amount: withdrawalAmount,
+      accountName: "flex",
+      title: "Flex Debited",
+      type: "debit",
+      email,
+    });
+
+    try {
+      await newActivity.save();
+    } catch (error) {
+      return new NextResponse("Error creating activity", { status: 400 });
     }
 
     const newWithdrawal = new Withdrawal({

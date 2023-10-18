@@ -11,8 +11,13 @@ import { toast } from "react-toastify";
 const TopUpFlex = ({ toggleTopUpDrawer, anchor }) => {
   const session = useSession();
   const theme = useTheme();
-  const { flexColor, balancesData, mutateBalances, mutateFlexes } =
-    useGlobalContext();
+  const {
+    flexColor,
+    balancesData,
+    mutateBalances,
+    mutateFlexes,
+    mutateActivities,
+  } = useGlobalContext();
 
   const publicKey = "pk_test_e3992992a05fe03a93bd935c8a27c4eee2347379";
   const [email, setEmail] = useState(session?.data.user.email);
@@ -54,6 +59,22 @@ const TopUpFlex = ({ toggleTopUpDrawer, anchor }) => {
         }),
       });
       mutateFlexes();
+    } catch (error) {
+      console.log("Error creating flex");
+    }
+
+    try {
+      await fetch(`/api/activities`, {
+        method: "POST",
+        body: JSON.stringify({
+          amount,
+          accountName: "flex",
+          title: "Flex Credited",
+          type: "credit",
+          email: session.data.user.email,
+        }),
+      });
+      mutateActivities();
     } catch (error) {
       console.log("Error creating flex");
     }

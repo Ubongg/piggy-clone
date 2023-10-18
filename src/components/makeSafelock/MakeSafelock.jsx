@@ -1,4 +1,4 @@
-import { Box, Typography, Drawer, Button } from "@mui/material";
+import { Box, Typography } from "@mui/material";
 import { useTheme } from "@mui/material/styles";
 import CloseIcon from "@mui/icons-material/Close";
 import { useGlobalContext } from "../context/context";
@@ -18,11 +18,12 @@ const MakeSafelock = ({ toggleCreateSafelockDrawer, anchor }) => {
     balancesData,
     mutateBalances,
     mutateFlexes,
+    mutateActivities,
   } = useGlobalContext();
-  // const falseDate = (date) => new Date() < date;
+
   const falseDate = (date) => {
     const currentDate = new Date();
-    currentDate.setDate(currentDate.getDate() + 9); // Add 10 days to the current date
+    currentDate.setDate(currentDate.getDate() + 9);
     return currentDate < date;
   };
   function addDays(date, days) {
@@ -89,6 +90,38 @@ const MakeSafelock = ({ toggleCreateSafelockDrawer, anchor }) => {
           }),
         });
         mutateFlexes();
+      } catch (error) {
+        console.log("Error creating flex");
+      }
+
+      try {
+        await fetch(`/api/activities`, {
+          method: "POST",
+          body: JSON.stringify({
+            amount,
+            accountName: "safelock",
+            title: "Safelock Credited",
+            type: "credit",
+            email: session.data.user.email,
+          }),
+        });
+        mutateActivities();
+      } catch (error) {
+        console.log("Error creating flex");
+      }
+
+      try {
+        await fetch(`/api/activities`, {
+          method: "POST",
+          body: JSON.stringify({
+            amount,
+            accountName: "flex",
+            title: "Flex Debited",
+            type: "debit",
+            email: session.data.user.email,
+          }),
+        });
+        mutateActivities();
       } catch (error) {
         console.log("Error creating flex");
       }

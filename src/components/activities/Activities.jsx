@@ -1,11 +1,12 @@
-import { Box } from "@mui/material";
+import { Box, Typography } from "@mui/material";
 import CloseIcon from "@mui/icons-material/Close";
 import { useTheme } from "@mui/material/styles";
 import { useGlobalContext } from "../context/context";
 
 const Activities = ({ toggleActivitiesDrawer, anchor }) => {
   const theme = useTheme();
-  const { safeColor } = useGlobalContext();
+  const { safeColor, activitiesData, mutateActivities, flexColor } =
+    useGlobalContext();
 
   return (
     <Box
@@ -34,7 +35,15 @@ const Activities = ({ toggleActivitiesDrawer, anchor }) => {
       >
         <CloseIcon style={{ fontSize: "2rem" }} />
       </Box>
-      Activities
+      {activitiesData?.map((activity) => {
+        return (
+          <Box key={activity._id}>
+            <Typography variant="p" fontSize="1rem" color={flexColor}>
+              {activity.title}
+            </Typography>
+          </Box>
+        );
+      })}
     </Box>
   );
 };
