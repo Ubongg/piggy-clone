@@ -51,7 +51,7 @@ const Home = () => {
           m: "38px 45px",
           overflowX: "auto",
           [theme.breakpoints.down("sm")]: {
-            m: "70px 15px",
+            m: "38px 15px 70px",
           },
         }}
       >

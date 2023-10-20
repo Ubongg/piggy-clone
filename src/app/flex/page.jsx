@@ -68,7 +68,7 @@ const Flex = () => {
           width: "100%",
           m: "38px 45px",
           [theme.breakpoints.down("sm")]: {
-            m: "70px 15px",
+            m: "38px 15px 70px",
           },
         }}
       >

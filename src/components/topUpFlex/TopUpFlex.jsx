@@ -104,12 +104,12 @@ const TopUpFlex = ({ toggleTopUpDrawer, anchor }) => {
         flexDirection: "column",
         width: 450,
         height: "100vh",
-        padding: "30px 25px",
+        padding: "38px 25px",
         [theme.breakpoints.down("xs")]: {
           width: "100vw",
         },
         [theme.breakpoints.down("sm")]: {
-          p: "30px 15px",
+          p: "38px 15px",
         },
       }}
       role="presentation"
