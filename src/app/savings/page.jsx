@@ -47,7 +47,7 @@ const Savings = () => {
               Savings
             </Typography>
             <Typography variant="p">
-              Let's see how well you're doing.
+              Let us see how well you are doing.
             </Typography>
           </Box>
           <ProfileButton />
