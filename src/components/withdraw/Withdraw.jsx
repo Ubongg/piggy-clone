@@ -61,6 +61,9 @@ const Withdraw = ({ toggleWithdrawDrawer, anchor }) => {
         [theme.breakpoints.down("xs")]: {
           width: "100vw",
         },
+        [theme.breakpoints.down("sm")]: {
+          p: "30px 15px",
+        },
       }}
       role="presentation"
     >

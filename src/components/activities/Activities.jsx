@@ -26,6 +26,9 @@ const Activities = ({ toggleActivitiesDrawer, anchor, debit, credit }) => {
         [theme.breakpoints.down("xs")]: {
           width: "100vw",
         },
+        [theme.breakpoints.down("sm")]: {
+          p: "30px 15px",
+        },
       }}
       role="presentation"
     >
@@ -47,7 +50,8 @@ const Activities = ({ toggleActivitiesDrawer, anchor, debit, credit }) => {
           display: "flex",
           flexDirection: "column",
           gap: "1.2rem",
-          my: "30px",
+          // my: "30px",
+          p: "30px 0 70px",
         }}
       >
         <Typography
