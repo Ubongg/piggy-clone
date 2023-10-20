@@ -173,7 +173,7 @@ const Login = () => {
           marginTop: "30px",
         }}
       >
-        Don't have an account? Register
+        You do not have an account? Register
       </Link>
     </Box>
   );
