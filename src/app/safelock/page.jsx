@@ -22,6 +22,7 @@ import { useRouter } from "next/navigation";
 import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 import CountDown from "@/components/countDown/CountDown";
 import SafeBalance from "@/components/safeBalance/SafeBalance";
+import AutoLogout from "@/components/autoLogout/AutoLogout";
 
 const Safelock = () => {
   const session = useSession();
@@ -460,6 +461,7 @@ const Safelock = () => {
             </TabPanel>
           </TabContext>
         </Box>
+        <AutoLogout />
       </Box>
     );
   }

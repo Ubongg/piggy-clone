@@ -11,6 +11,7 @@ import { useGlobalContext } from "@/components/context/context";
 import { useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
 import { useEffect } from "react";
+import AutoLogout from "@/components/autoLogout/AutoLogout";
 
 const Savings = () => {
   const session = useSession();
@@ -244,6 +245,7 @@ const Savings = () => {
             </Card>
           </Link>
         </Box>
+        <AutoLogout />
       </Box>
     );
   }

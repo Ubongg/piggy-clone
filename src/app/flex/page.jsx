@@ -21,6 +21,7 @@ import { useGlobalContext } from "@/components/context/context";
 import { useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
 import AccountBalanceOutlinedIcon from "@mui/icons-material/AccountBalanceOutlined";
+import AutoLogout from "@/components/autoLogout/AutoLogout";
 
 const Flex = () => {
   const session = useSession();
@@ -568,6 +569,7 @@ const Flex = () => {
             </TabPanel>
           </TabContext>
         </Box>
+        <AutoLogout />
       </Box>
     );
   }

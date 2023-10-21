@@ -14,6 +14,7 @@ import { useGlobalContext } from "@/components/context/context";
 import { useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
 import { useEffect } from "react";
+import AutoLogout from "@/components/autoLogout/AutoLogout";
 
 const Home = () => {
   const session = useSession();
@@ -412,6 +413,7 @@ const Home = () => {
             </React.Fragment>
           ))}
         </div>
+        <AutoLogout />
       </Box>
     );
   }
