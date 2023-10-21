@@ -64,7 +64,7 @@ const Home = () => {
         >
           <Box>
             <Typography variant="h5" fontWeight={600} fontSize="1.8rem">
-              {session?.data?.user.name},
+              {session?.data?.user.name.split(" ")[0]},
             </Typography>
             <Typography variant="p">Save some money today!</Typography>
           </Box>
