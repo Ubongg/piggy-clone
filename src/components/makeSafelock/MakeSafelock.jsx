@@ -278,7 +278,7 @@ const MakeSafelock = ({ toggleCreateSafelockDrawer, anchor }) => {
                       color: "black",
                     }}
                   >
-                    Flex Account - N{balance.accountBalance}
+                    Flex Account - N{balance.accountBalance.toLocaleString()}
                   </p>
                 </div>
               );
