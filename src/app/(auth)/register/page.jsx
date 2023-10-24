@@ -223,7 +223,7 @@ const Register = () => {
           marginTop: "30px",
         }}
       >
-        Already have an account? Login
+        You already have an account? Login
       </Link>
     </Box>
   );

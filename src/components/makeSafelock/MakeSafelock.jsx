@@ -45,90 +45,92 @@ const MakeSafelock = ({ toggleCreateSafelockDrawer, anchor }) => {
       );
     });
 
-    if (balance.accountBalance >= amount && amount >= 1000) {
-      const newBalance = balance.accountBalance - amount;
+    if (balance.accountBalance >= amount) {
+      if (amount >= 1000) {
+        const newBalance = balance.accountBalance - amount;
 
-      try {
-        await fetch("/api/safelocks", {
-          method: "POST",
-          body: JSON.stringify({
-            amount,
-            title,
-            paybackDate: payBackDate,
-            status: "ongoing",
-            email: session.data.user.email,
-          }),
-        });
-        mutateSafelocks();
-        e.target.reset();
-        toast.success("Safelock Created");
-      } catch (error) {
-        toast.error("Safelock Not Created");
-      }
+        try {
+          await fetch("/api/safelocks", {
+            method: "POST",
+            body: JSON.stringify({
+              amount,
+              title,
+              paybackDate: payBackDate,
+              status: "ongoing",
+              email: session.data.user.email,
+            }),
+          });
+          mutateSafelocks();
+          e.target.reset();
+          toast.success("Safelock Created");
+        } catch (error) {
+          toast.error("Safelock Not Created");
+        }
 
-      try {
-        await fetch(`/api/balances/${balance._id}`, {
-          method: "PUT",
-          body: JSON.stringify({
-            ...balancesData,
-            accountBalance: newBalance,
-          }),
-        });
-        mutateBalances();
-      } catch (error) {
-        console.log("Error updating flex balance ");
-      }
+        try {
+          await fetch(`/api/balances/${balance._id}`, {
+            method: "PUT",
+            body: JSON.stringify({
+              ...balancesData,
+              accountBalance: newBalance,
+            }),
+          });
+          mutateBalances();
+        } catch (error) {
+          console.log("Error updating flex balance ");
+        }
 
-      try {
-        await fetch(`/api/flexes`, {
-          method: "POST",
-          body: JSON.stringify({
-            amount,
-            title: "Flex Debited",
-            type: "debit",
-            email: session.data.user.email,
-          }),
-        });
-        mutateFlexes();
-      } catch (error) {
-        console.log("Error creating flex");
-      }
+        try {
+          await fetch(`/api/flexes`, {
+            method: "POST",
+            body: JSON.stringify({
+              amount,
+              title: "Flex Debited",
+              type: "debit",
+              email: session.data.user.email,
+            }),
+          });
+          mutateFlexes();
+        } catch (error) {
+          console.log("Error creating flex");
+        }
 
-      try {
-        await fetch(`/api/activities`, {
-          method: "POST",
-          body: JSON.stringify({
-            amount,
-            accountName: "flex",
-            title: "Flex Debited",
-            type: "debit",
-            email: session.data.user.email,
-          }),
-        });
-        mutateActivities();
-      } catch (error) {
-        console.log("Error creating flex");
-      }
+        try {
+          await fetch(`/api/activities`, {
+            method: "POST",
+            body: JSON.stringify({
+              amount,
+              accountName: "flex",
+              title: "Flex Debited",
+              type: "debit",
+              email: session.data.user.email,
+            }),
+          });
+          mutateActivities();
+        } catch (error) {
+          console.log("Error creating flex");
+        }
 
-      try {
-        await fetch(`/api/activities`, {
-          method: "POST",
-          body: JSON.stringify({
-            amount,
-            accountName: "safelock",
-            title: "Safelock Credited",
-            type: "credit",
-            email: session.data.user.email,
-          }),
-        });
-        mutateActivities();
-      } catch (error) {
-        console.log("Error creating flex");
+        try {
+          await fetch(`/api/activities`, {
+            method: "POST",
+            body: JSON.stringify({
+              amount,
+              accountName: "safelock",
+              title: "Safelock Credited",
+              type: "credit",
+              email: session.data.user.email,
+            }),
+          });
+          mutateActivities();
+        } catch (error) {
+          console.log("Error creating flex");
+        }
+      } else {
+        toast.error("Amount should be at least N1000");
       }
     } else {
-      toast.error(
-        "Insufficient funds in flex or amount should be at least N1000"
-      );
+      toast.error("Insufficient funds in flex account");
     }
   };
 
