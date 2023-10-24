@@ -105,7 +105,7 @@ const Home = () => {
               <Box>
                 <Typography variant="p">Total Savings</Typography>
                 <Typography variant="h5" sx={{ fontWeight: 600 }}>
-                  N{totalSavings.toLocaleString()}
+                  N{totalSavings?.toLocaleString()}
                 </Typography>
               </Box>
             </Card>

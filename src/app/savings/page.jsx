@@ -76,7 +76,7 @@ const Savings = () => {
             color="#27374D"
             fontWeight={600}
           >
-            N{totalSavings.toLocaleString()}
+            N{totalSavings?.toLocaleString()}
           </Typography>
         </Box>
         <Box
