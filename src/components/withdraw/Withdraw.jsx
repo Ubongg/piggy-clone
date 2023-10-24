@@ -134,7 +134,7 @@ const Withdraw = ({ toggleWithdrawDrawer, anchor }) => {
         </label>
         <input
           type="password"
-          placeholder="Password"
+          placeholder="Your YuboVest Password"
           required
           style={{
             outline: "none",
