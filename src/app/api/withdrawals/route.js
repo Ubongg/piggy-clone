@@ -42,7 +42,7 @@ export const POST = async (request) => {
   const isPasswordCorrect = await bcrypt.compare(password, user.password);
 
   if (isPasswordCorrect) {
-    if (withdrawalAmount <= 0) {
+    if (withdrawalAmount < 1000) {
       return new NextResponse("Invalid withdrawal amount", { status: 400 });
     }
     if (balance.accountBalance < withdrawalAmount) {

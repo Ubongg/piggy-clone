@@ -28,25 +28,35 @@ const Withdraw = ({ toggleWithdrawDrawer, anchor }) => {
       );
     });
 
-    if (balance.accountBalance > withdrawalAmount && withdrawalAmount > 0) {
-      try {
-        await fetch("/api/withdrawals", {
-          method: "POST",
-          body: JSON.stringify({
-            withdrawalAmount,
-            password,
-            email: session?.data.user.email,
-          }),
-        });
-        mutateWithdrawals();
-        e.target.reset();
-      } catch (error) {
-        console.log(error);
+    if (balance.accountBalance > withdrawalAmount) {
+      if (withdrawalAmount >= 1000) {
+        try {
+          const response = await fetch("/api/withdrawals", {
+            method: "POST",
+            body: JSON.stringify({
+              withdrawalAmount,
+              password,
+              email: session?.data.user.email,
+            }),
+          });
+
+          if (response.status === 401) {
+            // Unauthorized: Incorrect password
+            throw new Error("Unauthorized: Incorrect password");
+          }
+
+          mutateWithdrawals();
+          toast.success("Withdrawal successful");
+          e.target.reset();
+        } catch (error) {
+          console.log(error);
+          toast.error("Incorrect password");
+        }
+      } else {
+        toast.error("Withdrawal amount should be at least N1000");
       }
     } else {
-      toast.error(
-        "Insufficient funds or withdrawal amount should be more than 0"
-      );
+      toast.error("Insufficient funds");
     }
   };
 
