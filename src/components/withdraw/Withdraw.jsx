@@ -110,7 +110,7 @@ const Withdraw = ({ toggleWithdrawDrawer, anchor }) => {
         </label>
         <input
           type="number"
-          placeholder="withdrawalAmount"
+          placeholder="Withdrawal Amount"
           required
           style={{
             outline: "none",
