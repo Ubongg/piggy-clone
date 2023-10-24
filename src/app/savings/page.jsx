@@ -76,7 +76,7 @@ const Savings = () => {
             color="#27374D"
             fontWeight={600}
           >
-            N{totalSavings}
+            N{totalSavings.toLocaleString()}
           </Typography>
         </Box>
         <Box
@@ -147,6 +147,7 @@ const Savings = () => {
               </Typography>
               {balancesData?.map((balance) => {
                 if (balance.accountName === "flex") {
+                  const flexBal = balance.accountBalance;
                   return (
                     <Box key={balance._id}>
                       <Typography
@@ -160,7 +161,7 @@ const Savings = () => {
                           },
                         }}
                       >
-                        N{balance.accountBalance}
+                        N{flexBal.toLocaleString()}
                       </Typography>
                     </Box>
                   );
@@ -223,6 +224,7 @@ const Savings = () => {
               </Typography>
               {balancesData?.map((balance) => {
                 if (balance.accountName === "safelock") {
+                  const safeBal = balance.accountBalance;
                   return (
                     <Box key={balance._id}>
                       <Typography
@@ -236,7 +238,7 @@ const Savings = () => {
                           },
                         }}
                       >
-                        N{balance.accountBalance}
+                        N{safeBal.toLocaleString()}
                       </Typography>
                     </Box>
                   );

@@ -105,7 +105,7 @@ const Home = () => {
               <Box>
                 <Typography variant="p">Total Savings</Typography>
                 <Typography variant="h5" sx={{ fontWeight: 600 }}>
-                  N{totalSavings}
+                  N{totalSavings.toLocaleString()}
                 </Typography>
               </Box>
             </Card>
@@ -136,10 +136,11 @@ const Home = () => {
                 <Typography variant="p">Flex Account</Typography>
                 {balancesData?.map((balance) => {
                   if (balance.accountName === "flex") {
+                    const flexBal = balance.accountBalance;
                     return (
                       <Box key={balance._id}>
                         <Typography variant="h5" sx={{ fontWeight: 600 }}>
-                          N{balance.accountBalance}
+                          N{flexBal.toLocaleString()}
                         </Typography>
                       </Box>
                     );
@@ -174,10 +175,11 @@ const Home = () => {
                 <Typography variant="p">Safelock</Typography>
                 {balancesData?.map((balance) => {
                   if (balance.accountName === "safelock") {
+                    const safeBal = balance.accountBalance;
                     return (
                       <Box key={balance._id}>
                         <Typography variant="h5" sx={{ fontWeight: 600 }}>
-                          N{balance.accountBalance}
+                          N{safeBal.toLocaleString()}
                         </Typography>
                       </Box>
                     );
@@ -376,7 +378,7 @@ const Home = () => {
                           fontSize: "0.8rem",
                         }}
                       >
-                        {activity.amount}
+                        {activity.amount.toLocaleString()}
                       </Typography>
                     </Box>
                   );

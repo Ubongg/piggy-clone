@@ -359,7 +359,7 @@ const Safelock = () => {
                                   fontWeight: 600,
                                 }}
                               >
-                                N{safelock.amount}
+                                N{safelock.amount.toLocaleString()}
                               </Typography>
                             </Box>
                             <CountDown
@@ -427,7 +427,7 @@ const Safelock = () => {
                                   fontWeight: 600,
                                 }}
                               >
-                                N{safelock.amount}
+                                N{safelock.amount.toLocaleString()}
                               </Typography>
                             </Box>
                             <Typography

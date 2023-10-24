@@ -36,7 +36,7 @@ const SafeBalance = ({ balance }) => {
         color={safeColor}
         fontWeight={600}
       >
-        N{balance.accountBalance}
+        N{balance.accountBalance.toLocaleString()}
       </Typography>
     </Box>
   );

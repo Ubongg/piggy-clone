@@ -166,7 +166,7 @@ const Flex = () => {
                             color={flexColor}
                             fontWeight={600}
                           >
-                            N{balance.accountBalance}
+                            N{balance.accountBalance.toLocaleString()}
                           </Typography>
                         </Box>
                       );
@@ -399,7 +399,7 @@ const Flex = () => {
                                   fontWeight: 600,
                                 }}
                               >
-                                N{flex.amount}
+                                N{flex.amount.toLocaleString()}
                               </Typography>
                             </Box>
                           </Box>
@@ -459,7 +459,7 @@ const Flex = () => {
                                   fontWeight: 600,
                                 }}
                               >
-                                N{flex.amount}
+                                N{flex.amount.toLocaleString()}
                               </Typography>
                             </Box>
                           </Box>
@@ -521,7 +521,7 @@ const Flex = () => {
                                   fontWeight: 600,
                                 }}
                               >
-                                N{flex.amount}
+                                N{flex.amount.toLocaleString()}
                               </Typography>
                             </Box>
                           </Box>

@@ -129,7 +129,7 @@ const Activities = ({ toggleActivitiesDrawer, anchor, debit, credit }) => {
                       fontSize: "0.8rem",
                     }}
                   >
-                    {activity.amount}
+                    {activity.amount.toLocaleString()}
                   </Typography>
                 </Box>
               );
@@ -215,7 +215,7 @@ const Activities = ({ toggleActivitiesDrawer, anchor, debit, credit }) => {
                       fontSize: "0.8rem",
                     }}
                   >
-                    {activity.amount}
+                    {activity.amount.toLocaleString()}
                   </Typography>
                 </Box>
               );
