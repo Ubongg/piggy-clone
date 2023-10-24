@@ -100,7 +100,7 @@ const Withdraw = ({ toggleWithdrawDrawer, anchor }) => {
             fontWeight: 600,
           }}
         >
-          withdrawalAmount
+          Withdrawal Amount
         </label>
         <input
           type="number"
