@@ -275,7 +275,7 @@ const MakeSafelock = ({ toggleCreateSafelockDrawer, anchor }) => {
                       width: "100%",
                       fontSize: "1rem",
                       borderRadius: "0.5rem",
-                      color: "rgb(119, 118, 118)",
+                      color: "black",
                     }}
                   >
                     Flex Account - N{balance.accountBalance}

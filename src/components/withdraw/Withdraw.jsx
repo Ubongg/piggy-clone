@@ -8,13 +8,7 @@ import { toast } from "react-toastify";
 const Withdraw = ({ toggleWithdrawDrawer, anchor }) => {
   const session = useSession();
   const theme = useTheme();
-  const {
-    flexColor,
-    mutateWithdrawals,
-    balancesData,
-    mutateBalances,
-    mutateFlexes,
-  } = useGlobalContext();
+  const { flexColor, mutateWithdrawals, balancesData } = useGlobalContext();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -110,7 +104,7 @@ const Withdraw = ({ toggleWithdrawDrawer, anchor }) => {
         </label>
         <input
           type="number"
-          placeholder="Withdrawal Amount"
+          placeholder="25000"
           required
           style={{
             outline: "none",

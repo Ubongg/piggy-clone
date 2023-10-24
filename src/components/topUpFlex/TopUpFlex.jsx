@@ -94,7 +94,10 @@ const TopUpFlex = ({ toggleTopUpDrawer, anchor }) => {
       setPhone("");
       setAmount(0);
     },
-    onClose: () => alert("Wait! You need this oil, don't go!!!!"),
+    onClose: () => {
+      setPhone("");
+      setAmount(0);
+    },
   };
 
   return (
@@ -196,6 +199,7 @@ const TopUpFlex = ({ toggleTopUpDrawer, anchor }) => {
         <input
           type="text"
           id="phone"
+          placeholder="08038038030"
           value={phone}
           style={{
             outline: "none",
@@ -221,6 +225,7 @@ const TopUpFlex = ({ toggleTopUpDrawer, anchor }) => {
         <input
           type="number"
           id="amount"
+          placeholder="25000"
           value={amount}
           style={{
             outline: "none",
