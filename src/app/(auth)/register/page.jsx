@@ -5,6 +5,7 @@ import Link from "next/link";
 const { Box, Typography, Button } = require("@mui/material");
 import { useRouter } from "next/navigation";
 import { useState } from "react";
+import { toast } from "react-toastify";
 
 const Register = () => {
   const { safeColor, mutateBalances } = useGlobalContext();
@@ -30,6 +31,12 @@ const Register = () => {
           password,
         }),
       });
+
+      if (res.status === 400) {
+        // Unauthorized: Incorrect password
+        throw new Error("Bad Request: Invalid email address");
+      }
+
       if (res.status === 201) {
         router.push("/login?success=Account has been created");
 
@@ -63,6 +70,7 @@ const Register = () => {
       }
     } catch (err) {
       setError(err);
+      toast.error("Invalid email address");
     }
   };
 

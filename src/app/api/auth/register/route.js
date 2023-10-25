@@ -3,8 +3,19 @@ import connect from "@/utils/db";
 import bcrypt from "bcryptjs";
 import { NextResponse } from "next/server";
 
+const isEmailValid = (email) => {
+  const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+  return emailRegex.test(email);
+};
+
 export const POST = async (request) => {
   const { name, email, password } = await request.json();
+
+  if (!isEmailValid(email)) {
+    return new NextResponse("Invalid email address", {
+      status: 400, // Bad Request
+    });
+  }
 
   await connect();
 
